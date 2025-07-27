@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting...</title>
+    <script>
+        // --- THIS IS THE ROUTER SCRIPT ---
+
+        // 1. List all of your REAL, VALID pages here.
+        const validPages = [
+            'index.html',
+            'event.html',
+            'rent.html',
+            'gallery.html',
+            'login.html',
+            '404.html'
+            // Add any other real .html files here
+        ];
+
+        // 2. Get the page name we are trying to visit from the URL.
+        const params = new URLSearchParams(window.location.search);
+        const requestedPage = params.get('page');
+
+        // 3. Check if the requested page is in our list of valid pages.
+        if (validPages.includes(requestedPage)) {
+            // If it's a REAL page, go there.
+            window.location.replace(requestedPage);
+        } else {
+            // If it's NOT a real page, go to 404.html. THIS IS THE REDIRECT.
+            window.location.replace('404.html');
+        }
+    </script>
+</head>
+<body>
+    <p>Redirecting...</p>
+</body>
+</html> 
