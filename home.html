@@ -44,21 +44,15 @@ document.onkeydown = function(e) {
 </script>
 
   <meta charset="utf-8">
-  <title>PantherVenue</title>
+  <title>Williamstown High School</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
-  
-
   <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-
-  <meta name="description" content="PantherVenue is a state-of-the-art gymnasium offering top-tier fitness facilities, personalized training, and a community-focused atmosphere.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="Williamstown High School showcases athletics, arts, and academic life with a unified campus events hub.">
+  <script src="js/config.js"></script>
+  <script src="js/site-runtime.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/105/three.min.js" integrity="sha512-uWKImujbh9CwNa8Eey5s8vlHDB4o1HhrVszkympkm5ciYTnUEQv3t4QHU02CUqPtdKTg62FsHo12x63q6u0wmg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
- 
-</a>
-
-
 
 <link rel="prefetch" href="viewer.html">
 <link rel="prefetch" href="js/panolens.min.js">
@@ -118,8 +112,32 @@ document.onkeydown = function(e) {
       
       /* HERO IMAGE PARALLAX - desktop only */
       #intro {
+        position: relative;
         background-attachment: fixed; /* this creates the parallax effect */
-        
+        background-image: url('https://hc-cdn.hel1.your-objectstorage.com/s/v3/09c79743a9117b165ede9c200441471f2c78cde0_screenshot_2025-10-30_at_8.50.33___pm.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: #fff;
+      }
+
+      #intro::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(7,21,51,0.82) 0%, rgba(7,21,51,0.45) 60%, rgba(7,21,51,0.82) 100%);
+        z-index: 0;
+      }
+
+      #intro .intro-container {
+        position: relative;
+        z-index: 1;
+        padding-top: 6rem;
+        padding-bottom: 4rem;
+      }
+
+      #logo img {
+        filter: brightness(0) invert(1);
       }
       
       /* DECORATIVE STYLES - desktop only */
@@ -407,7 +425,7 @@ document.onkeydown = function(e) {
   
 </head>
 
-<body>
+<body data-page="home">
 
 
    <script>
@@ -425,8 +443,6 @@ document.onkeydown = function(e) {
       }
     }());
   </script>
-
-<body>
 <!-- Header -->
   <header id="header">
     <div class="container">
@@ -434,20 +450,13 @@ document.onkeydown = function(e) {
       <div id="logo" class="pull-left">
         <!-- use a text logo instead of img if I want -->
         <!-- <h1><a href="#main">C<span>o</span>nf</a></h1>-->
-        <a href="https://cloud-lrd7zzrnx-hack-club-bot.vercel.app/0untitled__2357_x_778_px___2_.png" class="scrollto">
-          <img src="https://cloud-lrd7zzrnx-hack-club-bot.vercel.app/0untitled__2357_x_778_px___2_.png" alt="" title="">
-      </a>
-      
+        <a href="/home.html" class="scrollto">
+          <img src="navImage.png" alt="Williamstown High School Crest" title="Williamstown High School">
+        </a>
       </div>
 
       <nav id="nav-menu-container">
-        <ul class="nav-menu">
-          <li class="menu-active"><a href="/home.html">Home</a></li>
-          <li><a href="/home.html#about">About</a></li> <!-- Instructions will be here -->
-          <li><a href="/event.html">Events</a></li> <!-- Seating will be here -->
-          <li><a href="/rent.html">Rent Venue</a></li>
-         <li class="buy-tickets"><a href="/login.html" id="loginButton">Log In</a></li>
-        </ul>
+        <ul class="nav-menu"></ul>
       </nav>
     </div>
   </header>
@@ -461,8 +470,8 @@ document.onkeydown = function(e) {
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
 <script>
-  // Your Firebase configuration
-  const firebaseConfig = {
+  const runtime = window.SchedraSite || null;
+  const firebaseConfig = runtime && runtime.getFirebaseConfig ? runtime.getFirebaseConfig() : {
     apiKey: "AIzaSyC0BYFCxwgu3tHp_3oeLsxoMBpyDRnj8IA",
     authDomain: "panthervenue.firebaseapp.com",
     projectId: "panthervenue",
@@ -471,30 +480,69 @@ document.onkeydown = function(e) {
     appId: "1:15387964560:web:b9dbc68e3a97dd466b5415"
   };
 
-  // Initialize Firebase
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   }
   const auth = firebase.auth();
   const db = firebase.firestore();
+  const collections = runtime && runtime.getCollections ? runtime.getCollections() : {};
+  const usersCollection = collections.users || 'users_bridgewater';
+  const AUTH_STORAGE_KEY = 'schedra:authState';
+  const loginButton = document.getElementById('loginButton');
 
+  const readStoredAuth = () => {
+    try {
+      return JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY) || 'null');
+    } catch (err) {
+      return null;
+    }
+  };
 
-  auth.onAuthStateChanged(async (user) => {
-    const loginButton = document.getElementById('loginButton');
-    if (!loginButton) return; 
-
-    if (user) {
-
-      const userDoc = await db.collection('users').doc(user.uid).get();
-      if(userDoc.exists) {
-        loginButton.textContent = 'Dashboard';
-        loginButton.href = '/login.html'; 
+  const persistStoredAuth = (payload) => {
+    try {
+      if (payload) {
+        localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(payload));
+      } else {
+        localStorage.removeItem(AUTH_STORAGE_KEY);
       }
-    } else {
+    } catch (err) {
+      /* ignore storage errors */
+    }
+  };
 
-      loginButton.textContent = 'Log In';
+  if (loginButton) {
+    const storedAuth = readStoredAuth();
+    if (storedAuth) {
+      loginButton.textContent = 'Dashboard';
       loginButton.href = '/login.html';
     }
+  }
+
+  auth.onAuthStateChanged(async (user) => {
+    if (!loginButton) return;
+
+    if (user) {
+      const userDoc = await db.collection(usersCollection).doc(user.uid).get();
+      if (userDoc.exists) {
+        const data = userDoc.data() || {};
+        loginButton.textContent = 'Dashboard';
+        loginButton.href = '/login.html';
+        persistStoredAuth({
+          uid: user.uid,
+          email: user.email || data.email || '',
+          username: data.username || '',
+          isAdmin: !!data.isAdmin
+        });
+        return;
+      }
+      persistStoredAuth(null);
+      await auth.signOut();
+      return;
+    }
+
+    persistStoredAuth(null);
+    loginButton.textContent = 'Log In';
+    loginButton.href = '/login.html';
   });
 </script>
 
@@ -598,89 +646,135 @@ document.onkeydown = function(e) {
   <!-- Intro Section -->
 <section id="intro">
   <div class="intro-container wow fadeIn">
-    <h1 class="mb-4 pb-0">
-      <span id="typing-effect" style="color: white;"></span><br>
-      <span id="excellence" style="color: #e0072f;">&nbsp;</span>
+    <h1 class="mb-4 pb-0 hero-heading">
+      <span id="typing-effect" class="hero-headline"></span><br>
+      <span id="excellence" class="hero-accent">&nbsp;</span>
     </h1>
-    <p class="mb-4 pb-0">Bridgewater-Raritan High School, New Jersey</p>
-    <a href="#!" class="venobox play-btn mb-4" data-vbtype="iframe" data-autoplay="true" id="play-button" data-href="viewer.html"></a>
-    <a href="/event.html" class="about-btn scrollto">See Events</a>
+    <p class="mb-4 pb-0" data-config-text="home.hero.locationLabel"></p>
+    <div class="hero-actions">
+      <a href="#!" class="venobox play-btn mb-4" data-vbtype="iframe" data-autoplay="true" id="play-button" data-config-attr="data-href:home.hero.videoModal"></a>
+      <div class="hero-cta-group">
+        <a class="about-btn scrollto primary-cta" data-config-text="home.hero.primaryCta.label" data-config-attr="href:home.hero.primaryCta.href"></a>
+        <a class="about-btn outline secondary-cta" data-config-text="home.hero.secondaryCta.label" data-config-attr="href:home.hero.secondaryCta.href" data-config-visible="home.hero.secondaryCta.label"></a>
+      </div>
+    </div>
   </div>
 </section>
 <script>
-  // --- Elements & State ---
-  const fullText = "Where Community Meets ";
-  const excellenceText = "Excellence";
-  const typingElement = document.getElementById("typing-effect");
-  const excellenceElement = document.getElementById("excellence");
+  document.addEventListener('DOMContentLoaded', () => {
+    const runtime = window.SchedraSite;
+    const homeConfig = runtime ? runtime.getHomeConfig() : {};
+    const hero = homeConfig.hero || {};
+    const brand = runtime ? runtime.getBrand() : {};
+    const colors = brand.colors || {};
 
-  let index = 0;
-  let typingTimeout = null; 
+    const typingElement = document.getElementById('typing-effect');
+    const excellenceElement = document.getElementById('excellence');
+    const locationElement = document.querySelector('#intro p.mb-4.pb-0');
+    const playButton = document.getElementById('play-button');
+    const primaryCta = document.querySelector('.hero-cta-group .primary-cta');
+    const secondaryCta = document.querySelector('.hero-cta-group .secondary-cta');
 
+    const lead = (hero.lead || (brand.tagline && brand.tagline.lead) || 'Where Community Meets').trim();
+    const accent = (hero.accent || (brand.tagline && brand.tagline.accent) || 'Excellence').trim();
+    const location = hero.locationLabel || brand.locationLabel || '';
+    const primary = hero.primaryCta || {};
+    const secondary = hero.secondaryCta || {};
+    const videoModal = hero.videoModal || 'viewer.html';
 
-
- 
-  function type() {
-    if (index < fullText.length) {
-      typingElement.innerHTML += fullText.charAt(index);
-      index++;
-
-      typingTimeout = setTimeout(type, 70); 
-    } else {
-
-      typeExcellence();
+    if (locationElement && location) locationElement.textContent = location;
+    if (playButton) playButton.setAttribute('data-href', videoModal);
+    if (primaryCta) {
+      primaryCta.textContent = primary.label || 'See Events';
+      primaryCta.href = primary.href || '/event.html';
     }
-  }
-
-  // Types the second part: "Excellence"
-  function typeExcellence() {
-    let indexExcellence = 0;
-
-    function typeNextCharacter() {
-      if (indexExcellence < excellenceText.length) {
-        // For the first letter, REPLACE the placeholder ( ).
-        // For all others, APPEND the character.
-        if (indexExcellence === 0) {
-          excellenceElement.innerHTML = excellenceText.charAt(indexExcellence);
-        } else {
-          excellenceElement.innerHTML += excellenceText.charAt(indexExcellence);
-        }
-        indexExcellence++;
-        // Store the timeout so it can be cancelled
-        typingTimeout = setTimeout(typeNextCharacter, 150);
+    if (secondaryCta) {
+      if (secondary.label) {
+        secondaryCta.textContent = secondary.label;
+        secondaryCta.href = secondary.href || '#';
+        secondaryCta.hidden = false;
+      } else {
+        secondaryCta.hidden = true;
       }
     }
-    typeNextCharacter();
-  }
 
- 
-
-
-  function restartTyping() {
-
-    if (typingTimeout) {
-      clearTimeout(typingTimeout);
+    const accentColor = colors.accent || getComputedStyle(document.documentElement).getPropertyValue('--accent-color') || '#f82249';
+    if (excellenceElement && accentColor) {
+      const lighter = accentColor.trim().replace(/(#)([0-9a-fA-F]{6})/, (match, hash, hex) => {
+        if (hex.length !== 6) return accentColor.trim();
+        const r = Math.min(255, parseInt(hex.slice(0,2),16) + 30);
+        const g = Math.min(255, parseInt(hex.slice(2,4),16) + 30);
+        const b = Math.min(255, parseInt(hex.slice(4,6),16) + 30);
+        const toHex = (v) => v.toString(16).padStart(2, '0');
+        return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+      });
+      excellenceElement.style.color = lighter;
+      excellenceElement.style.textShadow = `2px 2px 4px ${accentColor}55`;
     }
 
+    if (!typingElement || !excellenceElement) return;
 
-    typingElement.innerHTML = '';
-    index = 0;
+    typingElement.style.color = 'var(--contrast-color)';
 
-    excellenceElement.innerHTML = '&nbsp';
+    const fullText = `${lead} `;
+    const excellenceText = accent || '';
+    let index = 0;
+    let typingTimeout = null;
 
-    //sart the typing animation from the beginning.
-    type();
-  }
+    const typeLead = () => {
+      if (index < fullText.length) {
+        typingElement.innerHTML += fullText.charAt(index);
+        index += 1;
+        typingTimeout = window.setTimeout(typeLead, 70);
+      } else {
+        typeAccent();
+      }
+    };
 
+    const typeAccent = () => {
+      let accentIndex = 0;
+      const reveal = () => {
+        if (accentIndex < excellenceText.length) {
+          const char = excellenceText.charAt(accentIndex);
+          if (accentIndex === 0) {
+            excellenceElement.innerHTML = char;
+          } else {
+            excellenceElement.innerHTML += char;
+          }
+          accentIndex += 1;
+          typingTimeout = window.setTimeout(reveal, 150);
+        }
+      };
+      reveal();
+    };
 
-  document.addEventListener('keydown', function(e) {
-    if (e.metaKey && e.key.toLowerCase() === 'h') {
-      e.preventDefault(); 
-      restartTyping();
-    }
+    const restartTyping = () => {
+      if (typingTimeout) {
+        window.clearTimeout(typingTimeout);
+        typingTimeout = null;
+      }
+      index = 0;
+      typingElement.innerHTML = '';
+      excellenceElement.innerHTML = '&nbsp;';
+      typeLead();
+    };
+
+    restartTyping();
+
+    document.addEventListener('keydown', (event) => {
+      const target = event.target;
+      const isTypingField = target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable);
+      if (isTypingField) return;
+
+      if (!event.metaKey && !event.ctrlKey && !event.altKey && !event.shiftKey && event.key.toLowerCase() === 'r') {
+        event.preventDefault();
+        restartTyping();
+      } else if (event.metaKey && event.key.toLowerCase() === 'h') {
+        event.preventDefault();
+        restartTyping();
+      }
+    });
   });
-
-
 </script>
 
 
@@ -736,21 +830,21 @@ document.onkeydown = function(e) {
 }
 
 .wave1 use {
-  fill: #9e1a32;
+  fill: var(--primary-color, var(--accent-color));
   opacity: 0.4;
   animation: move-forever1 10s linear infinite;
   animation-delay: -2s;
 }
 
 .wave2 use {
-  fill: #490b15;
+  fill: rgba(var(--accent-color-rgb, 37, 99, 235), 0.35);
   opacity: 0.7;
   animation: move-forever2 8s linear infinite;
   animation-delay: -2s;
 }
 
 .wave3 use {
-  fill: #e0072f;
+  fill: rgba(var(--accent-color-rgb, 37, 99, 235), 0.2);
   opacity: 0.3;
   animation: move-forever3 6s linear infinite;
   animation-delay: -2s;
@@ -777,12 +871,43 @@ document.onkeydown = function(e) {
 /* adjust content positioning */
 .hero h1 {
   font-size: 3.5rem;
-  text-shadow: 2px 2px 4px rgba(211, 42, 42, 0.5);
+  text-shadow: 2px 2px 4px rgba(var(--accent-color-rgb, 37, 99, 235), 0.35);
 }
 
 .hero p {
   font-size: 1.5rem;
-  text-shadow: 1px 1px 2px rgba(173, 23, 23, 0.131);
+  text-shadow: 1px 1px 2px rgba(var(--accent-color-rgb, 37, 99, 235), 0.18);
+}
+.hero-headline {
+  color: var(--contrast-color);
+}
+.hero-accent {
+  color: var(--accent-color);
+}
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.hero-cta-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.hero-cta-group .about-btn {
+  min-width: 180px;
+  text-align: center;
+}
+.hero-cta-group .about-btn.outline {
+  background: transparent;
+  border: 2px solid var(--contrast-color);
+  color: var(--contrast-color);
+}
+.hero-cta-group .about-btn.outline:hover {
+  background: var(--contrast-color);
+  color: var(--heading-color);
 }
 </style>
 
@@ -939,49 +1064,20 @@ document.onkeydown = function(e) {
 
 
 
-    <!-- Clients Section -->
-    <section id="clients" class="clients section background: rgb(246, 247, 253);">
-
-      <div class="container" data-aos="fade-up">
-
-      <div class="row justify-content-center gy-4">
-
-  <div class="col-xl-2 col-md-3 col-6 client-logo">
-    <img src="img/sponsors/1.png" class="img-fluid" alt="">
-  </div>
-
-  <div class="col-xl-2 col-md-3 col-6 client-logo">
-    <img src="img/sponsors/2.png" class="img-fluid" alt="">
-  </div>
-
-  <div class="col-xl-2 col-md-3 col-6 client-logo">
-    <img src="img/sponsors/3.png" class="img-fluid" alt="">
-  </div>
-
-  <div class="col-xl-2 col-md-3 col-6 client-logo">
-    <img src="img/sponsors/7.png" class="img-fluid" alt="">
-  </div>
-
-</div>
-
-      </div>
-
-    </section>
-
     <!-- About Section -->
-    <section id="about" class="about section">
+    <section id="about" class="about section" data-config-visible="home.sections.about">
 
       <div class="section-header">
-        <h2>About Us</h2>
-        <p>Learn more about PantherVenue and its vision.</p>
+        <h2 data-config-text="home.about.heading">Life at Williamstown High School</h2>
+        <p data-config-text="home.about.subheading">Learn how the Braves bring academics, arts, and athletics together.</p>
       </div>
 
       <div class="container" data-aos="fade-up">
         <div class="row gy-5">
           <div class="content col-xl-5 d-flex flex-column" data-aos="fade-up" data-aos-delay="100">
-            <h3>BRHS and PantherVenue</h3>
-            <p>
-              The Bridgewater-Raritan High School, established in 1957, plays a vital role in Somerset County of New Jersey. The PantherVenue, our premier gymnasium, seats up to 3,500 and boasts modern amenities, including a high-quality sound system, adjustable lighting, and a large video screen. It was renovated in 2024, and features updated bleachers, a resurfaced floor, and new scoreboards, making it the ideal choice for sports, graduations, and community events.
+            <h3 data-config-text="home.about.heading">Life at Williamstown High School</h3>
+            <p data-config-text="home.about.body">
+              Williamstown High School celebrates academics, athletics, and the arts with a single hub that keeps Braves families, alumni, and neighbors informed.
             </p>
             <a href="#seating" class="about-btn align-self-center align-self-xl-start"><span>See Seating Charts</span> <i class="bi bi-chevron-right"></i></a>
           </div>
@@ -989,23 +1085,23 @@ document.onkeydown = function(e) {
             <div class="row gy-4">
               <div class="col-md-6 icon-box position-relative">
                 <i class="bi bi-briefcase"></i>
-                <h4><a href="" class="stretched-link">Community Hub</a></h4>
-                <p>Serves as a central location for school and community events.</p>
+                <h4><a href="" class="stretched-link">Student Leadership</a></h4>
+                <p>Student councils co-create signature traditions and community celebrations.</p>
               </div>
               <div class="col-md-6 icon-box position-relative">
                 <i class="bi bi-gem"></i>
-                <h4><a href="" class="stretched-link">Modern Facilities</a></h4>
-                <p>Equipped with cutting-edge technology for diverse events.</p>
+                <h4><a href="" class="stretched-link">Campus Pride</a></h4>
+                <p>Renovated venues showcase Braves colors, banners, and championship history.</p>
               </div>
               <div class="col-md-6 icon-box position-relative">
                 <i class="bi bi-broadcast"></i>
-                <h4><a href="" class="stretched-link">Versatile Space</a></h4>
-                <p>Adaptable for sports, ceremonies, and more.</p>
+                <h4><a href="" class="stretched-link">Versatile Spaces</a></h4>
+                <p>Flexible setups support athletics, STEAM showcases, and community forums.</p>
               </div>
               <div class="col-md-6 icon-box position-relative">
                 <i class="bi bi-easel"></i>
-                <h4><a href="" class="stretched-link">Recently Renovated</a></h4>
-                <p>Updated in 2024 with new bleachers and scoreboards.</p>
+                <h4><a href="" class="stretched-link">Tech Forward</a></h4>
+                <p>Livestream-ready production suites keep every Braves moment accessible.</p>
               </div>
             </div>
           </div>
@@ -1018,9 +1114,9 @@ document.onkeydown = function(e) {
   <svg id="stats-line-svg" viewBox="0 0 1200 800" preserveAspectRatio="none">
       <defs>
           <linearGradient id="redGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" style="stop-color:#b01a35;" />
-              <stop offset="50%" style="stop-color:#e0072f;" />
-              <stop offset="100%" style="stop-color:#ff0936;" />
+              <stop offset="0%" style="stop-color:#1c3fa8;" />
+              <stop offset="50%" style="stop-color:#2563eb;" />
+              <stop offset="100%" style="stop-color:#26b2e4;" />
           </linearGradient>
       </defs>
       
@@ -1042,8 +1138,8 @@ document.onkeydown = function(e) {
             <div class="stats-item d-flex">
               <i class="bi bi-people-fill flex-shrink-0"></i>
               <div>
-                <span data-purecounter-start="0" data-purecounter-end="3500" data-purecounter-duration="1.2" class="purecounter"></span>
-                <p><strong>Seating Capacity:</strong> <span>Up to 3,500 comfortable seats for attendees</span></p>
+                <span data-purecounter-start="0" data-purecounter-end="3200" data-purecounter-duration="1.2" class="purecounter"></span>
+                <p><strong>Seating Capacity:</strong> <span>More than 3,200 seats across stadiums, arenas, and performing arts venues</span></p>
               </div>
             </div>
           </div>
@@ -1051,8 +1147,8 @@ document.onkeydown = function(e) {
             <div class="stats-item d-flex">
               <i class="bi bi-calendar-check flex-shrink-0"></i>
               <div>
-                <span data-purecounter-start="0" data-purecounter-end="50" data-purecounter-duration="1.2" class="purecounter"></span>
-                <p><strong>Events Per Year:</strong> <span>Over 50 exciting events are hosted annually</span></p>
+                <span data-purecounter-start="0" data-purecounter-end="68" data-purecounter-duration="1.2" class="purecounter"></span>
+                <p><strong>Events Per Semester:</strong> <span>68 athletics, arts, and academic spotlights every semester</span></p>
               </div>
             </div>
           </div>
@@ -1060,8 +1156,8 @@ document.onkeydown = function(e) {
             <div class="stats-item d-flex">
               <i class="bi bi-laptop flex-shrink-0"></i>
               <div>
-                <span data-purecounter-start="0" data-purecounter-end="10" data-purecounter-duration="1.2" class="purecounter"></span>
-                <p><strong>Electrical Ports:</strong> <span>More than 50 easily accessible ports are available</span></p>
+                <span data-purecounter-start="0" data-purecounter-end="45" data-purecounter-duration="1.2" class="purecounter"></span>
+                <p><strong>Student Organizations:</strong> <span>45 clubs and teams spotlighted through campus programming</span></p>
               </div>
             </div>
           </div>
@@ -1069,8 +1165,8 @@ document.onkeydown = function(e) {
             <div class="stats-item d-flex">
               <i class="bi bi-building-up flex-shrink-0"></i>
               <div>
-                <span data-purecounter-start="0" data-purecounter-end="75" data-purecounter-duration="1.2" class="purecounter"></span>
-                <p><strong>Business Connections:</strong> <span>Approximately 75 business owners have used this venue</span></p>
+                <span data-purecounter-start="0" data-purecounter-end="25" data-purecounter-duration="1.2" class="purecounter"></span>
+                <p><strong>Community Partners:</strong> <span>25 civic organizations collaborate with Williamstown annually</span></p>
               </div>
             </div>
           </div>
@@ -1107,10 +1203,10 @@ document.onkeydown = function(e) {
 
 
   #stats .col-lg-5 img {
-      /* this filter creates a solid white shape directly behind the image's content.
-         we stack multiple shadows to make it fully opaque. */
-      filter: drop-shadow(0px 0px 15px #ffffff) 
-              drop-shadow(0px 0px 15px #ffffff) 
+      /* apply a cool blue tint while preserving the soft glow behind the illustration */
+      filter: hue-rotate(210deg) saturate(140%)
+              drop-shadow(0px 0px 15px #ffffff)
+              drop-shadow(0px 0px 15px #ffffff)
               drop-shadow(0px 0px 15px #ffffff);
   }
   
@@ -1187,10 +1283,10 @@ document.onkeydown = function(e) {
 
 
 
-<section id="services" class="services section">
+<section id="services" class="services section" data-config-visible="home.sections.amenities">
   <div class="section-header">
-    <h2>Amenities</h2>
-    <p>Explore what PantherVenue has to offer.</p>
+    <h2>Campus Amenities</h2>
+    <p>See how Williamstown High School venues adapt for athletics, arts, and academics.</p>
   </div>
   <div class="container" data-aos="fade-up">
     <div class="row gy-4">
@@ -1205,7 +1301,7 @@ document.onkeydown = function(e) {
           <div class="amenity-content-wrapper">
             <div class="icon-wrapper"><i class="bi bi-bounding-box-circles"></i></div>
             <h4>Seating</h4>
-            <p>Comfortable bleachers for up to 3,500 attendees.</p>
+            <p>Retractable and fixed seating configurations for up to 3,200 Braves fans.</p>
             <a href="https://www.mainguards.com/wp-content/uploads/2023/02/BRHS-MAIN-2023-Venue-Information-Form.pdf" target="_blank" class="plus-btn">
               <i class="fa fa-plus"></i><span>View Form</span>
             </a>
@@ -1222,8 +1318,8 @@ document.onkeydown = function(e) {
           </div>
           <div class="amenity-content-wrapper">
             <div class="icon-wrapper"><i class="bi bi-activity"></i></div>
-            <h4>Sound System</h4>
-            <p>High-quality audio systems for all types of events.</p>
+            <h4>Sound &amp; Media</h4>
+            <p>Integrated audio, livestream, and recording packages for every performance.</p>
             <a href="https://www.mainguards.com/wp-content/uploads/2023/02/BRHS-MAIN-2023-Venue-Information-Form.pdf" target="_blank" class="plus-btn">
               <i class="fa fa-plus"></i><span>View Form</span>
             </a>
@@ -1241,7 +1337,7 @@ document.onkeydown = function(e) {
           <div class="amenity-content-wrapper">
             <div class="icon-wrapper"><i class="bi bi-lightbulb"></i></div>
             <h4>Lighting</h4>
-            <p>Adjustable light systems to suit any occasion.</p>
+            <p>Programmable LED and theatrical lighting to match the tone of your event.</p>
             <a href="https://www.mainguards.com/wp-content/uploads/2023/02/BRHS-MAIN-2023-Venue-Information-Form.pdf" target="_blank" class="plus-btn">
               <i class="fa fa-plus"></i><span>View Form</span>
             </a>
@@ -1258,8 +1354,8 @@ document.onkeydown = function(e) {
           </div>
           <div class="amenity-content-wrapper">
             <div class="icon-wrapper"><i class="bi bi-broadcast"></i></div>
-            <h4>Video Screen</h4>
-            <p>A large screen is available for presentations.</p>
+            <h4>Scoreboards &amp; Displays</h4>
+            <p>LED scoreboards and campus-wide digital signage keep every guest informed.</p>
             <a href="https://www.mainguards.com/wp-content/uploads/2023/02/BRHS-MAIN-2023-Venue-Information-Form.pdf" target="_blank" class="plus-btn">
               <i class="fa fa-plus"></i><span>View Form</span>
             </a>
@@ -1400,7 +1496,7 @@ document.onkeydown = function(e) {
 
 /* text color change on hover */
 .services .service-item.amenity-box:hover .icon-wrapper i {
-    color: #c71c3a;
+    color: #102a56;
 }
 
 .services .service-item.amenity-box:hover h4 {
@@ -1412,8 +1508,8 @@ document.onkeydown = function(e) {
 }
 
 .services .service-item.amenity-box:hover .icon-wrapper {
-    background-color: #feebee; /* light red background */
-    border: 4px solid #c71c3a; /* darker red border */
+    background-color: #e7f2ff; /* light blue background */
+    border: 4px solid #1c3fa8; /* accent border */
 }
 
 /* square-to-rectangle plus button */
@@ -1423,7 +1519,7 @@ document.onkeydown = function(e) {
     justify-content: center;
     width: 40px;
     height: 40px;
-    background-color: #feebee; /* light red background */
+    background-color: #e7f2ff; /* light blue background */
     overflow: hidden;
     white-space: nowrap;
     text-decoration: none;
@@ -1433,7 +1529,7 @@ document.onkeydown = function(e) {
 }
 
 .services .amenity-box .plus-btn i {
-    color: #c71c3a; /* darker red plus sign */
+    color: #1c3fa8; /* accent blue */
     font-size: 16px;
     margin-left: 6px;
 }
@@ -1445,7 +1541,7 @@ document.onkeydown = function(e) {
     padding-left: 8px;
     font-weight: 600;
     font-size: 14px;
-    color: #c71c3a;
+    color: #1c3fa8;
 }
 
 .services .service-item.amenity-box:hover .plus-btn {
@@ -1464,7 +1560,7 @@ document.onkeydown = function(e) {
 </style>
 
 <!-- Seating Charts Section -->
-<section id="seating" class="section">
+<section id="seating" class="section" data-config-visible="home.sections.seating">
   <div class="container" data-aos="fade-up">
     <div class="section-header">
       <h2>Seating Charts</h2>
@@ -1672,240 +1768,6 @@ document.onkeydown = function(e) {
 
 
 
-
-<!-- Schedule Section (Policies) -->
-<section id="schedule" class="section-with-bg">
-  <div class="container" data-aos="fade-up">
-    <div class="section-header">
-      <h2>Policies</h2>
-      <p>Important rules and guidelines for using PantherVenue.</p>
-    </div>
-    <ul class="nav nav-tabs" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" href="#day-2" role="tab" data-toggle="tab">General</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#day-3" role="tab" data-toggle="tab">Tickets</a>
-      </li>
-    </ul>
-    <h3 class="sub-heading">Please review these policies to ensure a safe and enjoyable experience at PantherVenue.</h3>
-    <div class="tab-content row justify-content-center">
-      <!-- General Policies -->
-      <div role="tabpanel" class="col-lg-9 tab-pane fade show active" id="day-2">
-        <div class="row schedule-item">
-          <div class="col-md-2"><strong>No Outside Food</strong></div>
-          <div class="col-md-10">
-            <p>Outside food and beverages are prohibited to maintain cleanliness and support venue concessions.</p>
-          </div>
-        </div>
-        <div class="row schedule-item">
-          <div class="col-md-2"><strong>Bag Checks</strong></div>
-          <div class="col-md-10">
-            <p>All bags are subject to search upon entry for safety and security purposes to ensure a safe environment.</p>
-          </div>
-        </div>
-        <div class="row schedule-item">
-          <div class="col-md-2"><strong>No Smoking</strong></div>
-          <div class="col-md-10">
-            <p>Smoking, including e-cigarettes, is strictly prohibited inside the venue to maintain air quality.</p>
-          </div>
-        </div>
-        <div class="row schedule-item">
-          <div class="col-md-2"><strong>Quiet Zones</strong></div>
-          <div class="col-md-10">
-            <p>Designated quiet zones are available for guests who wish to relax or have a private conversation.</p>
-          </div>
-        </div>
-        <div class="row schedule-item">
-          <div class="col-md-2"><strong>Alcohol</strong></div>
-          <div class="col-md-10">
-            <p>Alcoholic beverages may not be consumed at PantherVenue. Doing so will result in immediate removal.</p>
-
-          </div>
-        </div>
-        <div class="row schedule-item">
-          <div class="col-md-2"><strong>Pet Policy</strong></div>
-          <div class="col-md-10">
-            <p>Pets are not allowed on the premises, with the exception of service animals.</p>
-          </div>
-        </div>
-        <div class="row schedule-item">
-          <div class="col-md-2"><strong>Parking</strong></div>
-          <div class="col-md-10">
-            <p>Parking is available in designated lots. Parking fees apply depending on the event.</p>
-          </div>
-        </div>
-        <div class="row schedule-item">
-          <div class="col-md-2"><strong>Lost & Found</strong></div>
-          <div class="col-md-10">
-            <p>Items lost during an event can be found at the lost and found desk located near the main entrance.</p>
-          </div>
-        </div>
-      </div>
-      <!-- Ticket Policies -->
-      <div role="tabpanel" class="col-lg-9 tab-pane fade" id="day-3">
-        <div class="row schedule-item">
-          <div class="col-md-2"><strong>Non-Refundable</strong></div>
-          <div class="col-md-10">
-            <p>Tickets are non-refundable unless the event is canceled by the venue, in which case full refunds will be issued.</p>
-          </div>
-        </div>
-        <div class="row schedule-item">
-          <div class="col-md-2"><strong>Purchase Limit</strong></div>
-          <div class="col-md-10">
-            <p>A maximum of 10 tickets can be purchased per transaction to ensure fair distribution.</p>
-          </div>
-        </div>
-        <div class="row schedule-item">
-          <div class="col-md-2"><strong>Lost Tickets</strong></div>
-          <div class="col-md-10">
-            <p>Lost or stolen tickets can be replaced at the box office with valid ID, but be sure to report it immediately.</p>
-          </div>
-        </div>
-        <div class="row schedule-item">
-          <div class="col-md-2"><strong>Transferable</strong></div>
-          <div class="col-md-10">
-            <p>Tickets are transferable, but you must notify the box office of any changes in ownership prior to the event.</p>
-          </div>
-        </div>
-        <div class="row schedule-item">
-          <div class="col-md-2"><strong>Special Discounts</strong></div>
-          <div class="col-md-10">
-            <p>Special discounts may be available for students and military personnel. Valid ID is required for verification.</p>
-          </div>
-        </div>
-        <div class="row schedule-item">
-          <div class="col-md-2"><strong>VIP Tickets</strong></div>
-          <div class="col-md-10">
-            <p>VIP tickets offer additional perks such as early entry, exclusive seating, and access to VIP-only areas.</p>
-          </div>
-        </div>
-        <div class="row schedule-item">
-          <div class="col-md-2"><strong>Group Tickets</strong></div>
-          <div class="col-md-10">
-            <p>Group ticket packages are available for parties of 10 or more at discounted rates. Please contact support.</p>
-          </div>
-        </div>
-        <div class="row schedule-item">
-          <div class="col-md-2"><strong>Cancellations</strong></div>
-          <div class="col-md-10">
-            <p>If an event is canceled, ticket holders will receive refunds or the option to exchange tickets for future events.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Team Section -->
-<section id="team" class="team section">
-
-  <div class="section-header">
-    <h2>Team</h2>
-    <p>Take a quick glance at our group of hardworking individuals.</p>
-  </div>
-
-  <!-- SVG for the Team section line -->
-  <svg id="team-line-svg" viewBox="0 0 1200 700" preserveAspectRatio="none">
-    <defs>
-      <linearGradient id="teamRedGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" style="stop-color:#b01a35;" />
-        <stop offset="50%" style="stop-color:#e0072f;" />
-        <stop offset="100%" style="stop-color:#ff0936;" />
-      </linearGradient>
-    </defs>
-    <!-- this path is hand-crafted to follow the drawing's trajectory -->
-    <path id="team-scroll-line" stroke="url(#teamRedGradient)"
-          d="M 1229 51 C 1022 -51 748 309 984 539 S 349 99 429 453 S 19 80 -249 643" />
-  </svg>
-  <div class="container">
-  <div class="container">
-
-    <div class="row gy-4">
-
-      <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos-delay="100">
-        <div class="team-member">
-          <div class="member-img">
-            <img src="deniz.png" class="img-fluid" alt="Bill Deniz">
-            <div class="social">
-              <a href=""><i class="bi bi-twitter-x"></i></a>
-              <a href=""><i class="bi bi-facebook"></i></a>
-              <a href=""><i class="bi bi-instagram"></i></a>
-              <a href=""><i class="bi bi-linkedin"></i></a>
-            </div>
-          </div>
-          <div class="member-info">
-            <h4>Bill Deniz</h4>
-            <span>Athletic Director</span>
-            <p>Bill runs the venue and oversees all athletic events for smooth operations.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos-delay="100">
-        <div class="team-member">
-          <div class="member-img">
-            <img src="fry.png" class="img-fluid" alt="Keri Fry">
-            <div class="social">
-              <a href=""><i class="bi bi-twitter-x"></i></a>
-              <a href=""><i class="bi bi-facebook"></i></a>
-              <a href=""><i class="bi bi-instagram"></i></a>
-              <a href=""><i class="bi bi-linkedin"></i></a>
-            </div>
-          </div>
-          <div class="member-info">
-            <h4>Keri Fry</h4>
-            <span>Logistics and Business Manager</span>
-            <p>Keri runs the logistics and business side of the venue, and keeps operations efficient and profitable.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos-delay="100">
-        <div class="team-member">
-          <div class="member-img">
-            <img src="retiredath.png" class="img-fluid" alt="Daniel Hemberger">
-            <div class="social">
-              <a href=""><i class="bi bi-twitter-x"></i></a>
-              <a href=""><i class="bi bi-facebook"></i></a>
-              <a href=""><i class="bi bi-instagram"></i></a>
-              <a href=""><i class="bi bi-linkedin"></i></a>
-            </div>
-          </div>
-          <div class="member-info">
-            <h4>Daniel Hemberger</h4>
-            <span>School Principal</span>
-            <p>Daniel oversees the school's operations to ensure a supportive environment for students and staff.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos-delay="100">
-        <div class="team-member">
-          <div class="member-img">
-            <img src="me.png" class="img-fluid" alt="Anvay Ajmera">
-            <div class="social">
-              <a href=""><i class="bi bi-twitter-x"></i></a>
-              <a href=""><i class="bi bi-facebook"></i></a>
-              <a href=""><i class="bi bi-instagram"></i></a>
-              <a href=""><i class="bi bi-linkedin"></i></a>
-            </div>
-          </div>
-          <div class="member-info">
-            <h4>Anvay Ajmera</h4>
-            <span>Website Developer</span>
-            <p>Anvay coded the entire website for the venue, to create a perfect user experience.</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
-  </div>
-
-</section>
 
 <!-- Preloader -->
 <div id="preloader"></div>
@@ -2695,7 +2557,7 @@ document.onkeydown = function(e) {
   </style>
   
   <!-- Hotels Section -->
-  <section id="hotels" class="section-with-bg wow fadeInUp">
+  <section id="hotels" class="section-with-bg wow fadeInUp" data-config-visible="home.sections.hotels">
       <div class="container" data-aos="fade-up">
           <div class="section-header">
               <h2>Hotels</h2>
@@ -2898,82 +2760,8 @@ document.onkeydown = function(e) {
   </style>
 
 
- <!-- Testimonials Section -->
- <section id="testimonials" class="testimonials section light-background">
-  <div class="section-header">
-    <h2>Testimonials</h2>
-    <p class="testspecial">Read what our clients say about us.</p>
-  </div>
-  <div class="container" data-aos="fade-up" data-aos-delay="100">
-    <div class="swiper init-swiper">
-      <script type="application/json" class="swiper-config">
-        {
-          "loop": true,
-          "speed": 600,
-          "autoplay": {
-            "delay": 5000
-          },
-          "slidesPerView": "auto",
-          "pagination": {
-            "el": ".swiper-pagination",
-            "type": "bullets",
-            "clickable": true
-          },
-          "breakpoints": {
-            "320": {
-              "slidesPerView": 1,
-              "spaceBetween": 40
-            },
-            "1200": {
-              "slidesPerView": 2,
-              "spaceBetween": 20
-            }
-          }
-        }
-      </script>
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <div class="testimonial-wrap">
-            <div class="testimonial-item">
-              <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-              <h3>Mark Palazzi</h3>
-              <h4>Event Organizer</h4>
-              <div class="stars">
-                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-              </div>
-              <p>
-                <i class="bi bi-quote quote-icon-left"></i>
-                <span>The PantherVenue was perfect for our graduation ceremony. The staff was incredibly supportive, and the modern facilities made the event unforgettable.</span>
-                <i class="bi bi-quote quote-icon-right"></i>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="testimonial-wrap">
-            <div class="testimonial-item">
-              <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
-              <h3>Jane Chang</h3>
-              <h4>Coach</h4>
-              <div class="stars">
-                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-              </div>
-              <p>
-                <i class="bi bi-quote quote-icon-left"></i>
-                <span>Hosting our basketball tournament at PantherVenue was a slam dunk! The spacious gym and excellent sound system elevated the experience.</span>
-                <i class="bi bi-quote quote-icon-right"></i>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="swiper-pagination"></div>
-    </div>
-  </div>
-</section>
-
-<!-- Frequently Asked Questions Section -->
-<section id="faq">
+ <!-- Frequently Asked Questions Section -->
+<section id="faq" data-config-visible="home.sections.faq">
 
   <!-- decorations container is now INSIDE the FAQ section -->
   <div class="background-decorations">
@@ -3011,7 +2799,7 @@ document.onkeydown = function(e) {
   <div class="container" data-aos="fade-up">
     <div class="section-header">
       <h2>Frequently Asked Questions</h2>
-      <p>Learn everything you need to know about PantherVenue.</p>
+    <p>Learn everything you need to know about Bridgewater-Raritan events inside Schedra.</p>
     </div>
 
     <div class="faq-search-container">
@@ -3023,14 +2811,14 @@ document.onkeydown = function(e) {
 <!-- Question 1: Venue Location & Directions -->
       <li>
         <a data-toggle="collapse" href="#faq1" aria-expanded="false" class="collapsed">
-          <span class="question-text">Where is PantherVenue located?</span>
+                    <span class="question-text">Where does Schedra operate?</span>
           <i class="fas fa-plus"></i>
         </a>
         <div class="collapse" id="faq1" data-parent="#faq-list">
           <div class="faq-answer-content">
             <p>
               <span class="answer-text">
-                  Finding us is simple. PantherVenue is located at 600 Garretson Road, inside Bridgewater-Raritan High School in Bridgewater, New Jersey. For turn-by-turn directions, please visit the "Contact Us" section at the bottom of our home page, where you will find an integrated Google Maps tool.
+                  Schedra is the application used by Bridgewater-Raritan High School. All on-site events take place at 600 Garretson Road in Bridgewater, New Jersey. For turn-by-turn directions to the campus, visit the "Contact Us" section at the bottom of the page where you will find the integrated Google Maps tool.
               </span>
             </p>
           </div>
@@ -3071,7 +2859,7 @@ document.onkeydown = function(e) {
         </a>
         <div class="collapse" id="faq4" data-parent="#faq-list">
           <div class="faq-answer-content">
-            <p><span class="answer-text">Yes, PantherVenue is designed with a mobile-first approach to ensure a seamless experience on any device. The layout, navigation, and all interactive features automatically adapt to fit your screen, whether you are using a desktop, tablet, or smartphone.</span></p>
+            <p><span class="answer-text">Yes, Schedra is designed with a mobile-first approach to ensure a seamless experience on any device. The layout, navigation, and all interactive features automatically adapt to fit your screen, whether you are using a desktop, tablet, or smartphone.</span></p>
           </div>
         </div>
       </li>
@@ -3110,7 +2898,7 @@ document.onkeydown = function(e) {
         </a>
         <div class="collapse" id="faq7" data-parent="#faq-list">
           <div class="faq-answer-content">
-            <p><span class="answer-text">Your personal dashboard is your central hub for managing your PantherVenue experience. From here, you can view your ticket purchase history, see your upcoming events, check the status of your venue rental requests, and access your event-day flyers.</span></p>
+            <p><span class="answer-text">Your personal dashboard is your central hub for managing your Schedra experience. From here, you can view your ticket purchase history, see your upcoming events, check the status of your venue rental requests, and access your event-day flyers.</span></p>
           </div>
         </div>
       </li>
@@ -3123,7 +2911,7 @@ document.onkeydown = function(e) {
           </a>
           <div class="collapse" id="faq8" data-parent="#faq-list">
             <div class="faq-answer-content">
-              <p><span class="answer-text">The Admin Dashboard is a private, secure portal for PantherVenue staff. It serves as our command center for operations, allowing administrators to review and approve rental requests, manage the public event calendar, and monitor key site analytics to ensure we are always improving our services.</span></p>
+              <p><span class="answer-text">The Admin Dashboard is a private, secure portal for Schedra staff. It serves as our command center for operations, allowing administrators to review and approve rental requests, manage the public event calendar, and monitor key site analytics to ensure we are always improving our services.</span></p>
             </div>
           </div>
       </li>
@@ -3149,7 +2937,7 @@ document.onkeydown = function(e) {
           </a>
           <div class="collapse" id="faq10" data-parent="#faq-list">
             <div class="faq-answer-content">
-              <p><span class="answer-text">Yes, our AI assistant, PantherBot, is fully trained on all venue information. You can ask it for the address, parking information, or any other questions you may have. PantherBot is available 24/7 by clicking the chat icon at the bottom-right of your screen.</span></p>
+              <p><span class="answer-text">Yes, our AI assistant, SchedraBot, is fully trained on all venue information. You can ask it for the address, parking information, or any other questions you may have. SchedraBot is available 24/7 by clicking the chat icon at the bottom-right of your screen.</span></p>
             </div>
           </div>
       </li>
@@ -3268,7 +3056,7 @@ document.onkeydown = function(e) {
     
 
  <!-- Contact Section -->
-<section id="contact" class="section-bg wow fadeInUp">
+<section id="contact" class="section-bg wow fadeInUp" data-config-visible="home.sections.contact">
   <div class="container">
     <div class="section-header">
       <h2>Contact Us</h2>
@@ -3369,9 +3157,9 @@ document.onkeydown = function(e) {
 
         <div class="col-lg-4 col-md-12 panther-footer-info">
           <a href="/home.html" class="panther-footer-logo d-flex align-items-center">
-            <img src="https://cloud-lrd7zzrnx-hack-club-bot.vercel.app/0untitled__2357_x_778_px___2_.png" alt="PantherVenue Logo">
+            <img src="https://cloud-lrd7zzrnx-hack-club-bot.vercel.app/0untitled__2357_x_778_px___2_.png" alt="Schedra Logo">
           </a>
-          <p>The premier venue at Bridgewater-Raritan High School, perfect for sports, ceremonies, and community events. <br><br>Venue Credits: BRRSD Board of Education & Athletics <br><br> PantherVenue Website Credits: Bootstrap, Tailwind, Panolens, Google Firebase, Google Fonts, jQuery</p>
+          <p>Schedra is the digital venue management platform used by Bridgewater-Raritan High School to run athletics, performances, and community events. <br><br>Venue Credits: BRRSD Board of Education & Athletics <br><br> Schedra Platform Credits: Bootstrap, Tailwind, Panolens, Google Firebase, Google Fonts, jQuery</p>
         </div>
 
         <div class="col-lg-2 col-md-4 col-6 panther-footer-links">
@@ -3380,7 +3168,6 @@ document.onkeydown = function(e) {
             <li><i class="bi bi-chevron-right"></i> <a href="/home.html">Home</a></li>
             <li><i class="bi bi-chevron-right"></i> <a href="#about">About Us</a></li>
             <li><i class="bi bi-chevron-right"></i> <a href="/event.html">Events</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#schedule">Project Sources</a></li>
             <li><i class="bi bi-chevron-right"></i> <a href="https://www.brrsd.org/fs/pages/500" target="_blank">Privacy Policy</a></li>
           </ul>
         </div>
@@ -3415,7 +3202,7 @@ document.onkeydown = function(e) {
     <div class="container d-flex justify-content-center align-items-center">
       <div class="copyright-credits-wrapper">
         <div class="copyright">
-          © Copyright <strong><span>PantherVenue</span></strong>. All Rights Reserved
+          © Copyright <strong><span>Schedra</span></strong>. All Rights Reserved
         </div>
       </div>
     </div>
@@ -3436,7 +3223,7 @@ document.onkeydown = function(e) {
 
 
 <style>
-/* CSS for PantherVenue Final Footer */
+/* CSS for Schedra Final Footer */
 
 /* main footer container, needs to be relative so the wave can be positioned */
 #panther-footer-final {
@@ -4198,7 +3985,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="chat-header">
     <div class="header-info">
       <img src="aiprofile.png" alt="AI Profile Logo" class="chatbot-logo" />
-      <h2 class="logo-text">PantherBot</h2>
+      <h2 class="logo-text">SchedraBot</h2>
     </div>
     <button id="close-chatbot" class="material-symbols-rounded">keyboard_arrow_down</button>
   </div>
@@ -4206,7 +3993,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="chat-body">
     <div class="message bot-message">
       <img src="aiprofile.png" alt="AI Profile Logo" class="bot-avatar" />
-      <div class="message-text">Nice to meet you! I'm PantherBot, your AI chatbot for PantherVenue. How can I help you today?</div>
+      <div class="message-text">Nice to meet you! I'm SchedraBot, your AI chatbot for Schedra. How can I help you today?</div>
     </div>
   </div>
   <!-- Chatbot Footer -->
@@ -4289,7 +4076,7 @@ const generateBotResponse = async (incomingMessageDiv) => {
     } catch (error) {
         console.error("API Error:", error);
         messageElement.innerText = "Oops! Something went wrong. The AI service might be temporarily unavailable. Please try again later.";
-        messageElement.style.color = "#dc3545";
+        messageElement.style.color = "#1c3fa8";
     } finally {
         incomingMessageDiv.classList.remove("thinking");
         chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
@@ -4390,11 +4177,11 @@ document.addEventListener('DOMContentLoaded', () => {
         chatHistory = [
             {
                 role: "system",
-                content: `You are PantherBot, an expert AI assistant for PantherVenue. Your goal is to answer user questions accurately and helpfully based on the following information about the venue, its policies, and its website. Use Markdown for clear formatting.
+                content: `You are SchedraBot, an expert AI assistant for Schedra. Your goal is to answer user questions accurately and helpfully based on the following information about the venue, its policies, and its website. Use Markdown for clear formatting.
 
 ---
 ### General Venue Information
-- **Name:** PantherVenue
+- **Name:** Schedra
 - **Location:** Inside Bridgewater-Raritan High School, 600 Garretson Road, Bridgewater, New Jersey.
 - **Capacity:** Seats up to 3,500 people.
 - **Features:** A premier gymnasium renovated in 2024 with a high-quality sound system, adjustable lighting, a large video screen, new bleachers, and a resurfaced floor.
@@ -4435,12 +4222,12 @@ document.addEventListener('DOMContentLoaded', () => {
 ---
 ### Your Persona & Instructions
 - Be friendly, professional, and enthusiastic.
-- Your name is PantherBot.
+- Your name is SchedraBot.
 - Refer to the information above to answer questions. If you don't know the answer, politely state that you don't have that information and suggest contacting the venue directly via phone or email.`
             },
             {
                 role: "assistant",
-                content: "Nice to meet you! I'm PantherBot, your AI chatbot for PantherVenue. How can I help you today?"
+                content: "Nice to meet you! I'm SchedraBot, your AI chatbot for Schedra. How can I help you today?"
             }
         ];
     }
@@ -4479,7 +4266,7 @@ document.addEventListener('DOMContentLoaded', () => {
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      background: #dc3545; /* Red */
+      background: #1c3fa8; /* Accent */
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
       transition: all 0.2s ease;
       z-index: 1000; /* Ensure it's above other content */
@@ -4531,7 +4318,7 @@ document.addEventListener('DOMContentLoaded', () => {
       display: flex;
       align-items: center;
       padding: 15px 22px;
-      background: #dc3545; /* Red */
+      background: #1c3fa8; /* Accent */
       border-bottom: 1px solid #d4d4d4;
       justify-content: space-between;
     }
@@ -4624,7 +4411,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     .chat-body .user-message .message-text {
       color: #fff;
-      background: #dc3545; /* Red */
+      background: #1c3fa8; /* Accent */
       border-radius: 13px 13px 3px 13px;
     }
     /* Markdown formatting inside bot message */
@@ -4655,7 +4442,7 @@ document.addEventListener('DOMContentLoaded', () => {
       width: 7px;
       opacity: 0.7;
       border-radius: 50%;
-      background: #dc3545; /* Red */
+      background: #1c3fa8; /* Accent */
       animation: dotPulse 1.8s ease-in-out infinite;
     }
     .chat-body .bot-message .thinking-indicator .dot:nth-child(1) { animation-delay: 0.2s; }
@@ -4684,7 +4471,7 @@ document.addEventListener('DOMContentLoaded', () => {
       transition: 0s ease;
     }
     .chat-form:focus-within {
-      outline: 2px solid #dc3545; /* Red */
+      outline: 2px solid #1c3fa8; /* Accent */
     }
     .chat-form .message-input {
       font-family: "Inter", sans-serif;
@@ -4723,18 +4510,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     .chat-form .chat-controls button:hover,
     body.show-emoji-picker .chat-controls #emoji-picker {
-      color: #dc3545; /* Red */
-      background: #fdeaea; /* Light Red */
+      color: #1c3fa8; /* Accent */
+      background: #e7f2ff; /* Light Accent */
     }
     .chat-form .chat-controls #send-message {
       color: #fff;
-      background: #dc3545; /* Red */
+      background: #1c3fa8; /* Accent */
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .chat-form .chat-controls #send-message:hover {
-      background: #b02a37; /* Darker Red */
+      background: #102a56; /* Darker Red */
     }
     .chat-form .message-input:valid~.chat-controls #send-message {
       display: flex; /* Changed from block to flex for centering fix */
@@ -4844,5 +4631,3 @@ html {
 
 </body>
 </html>
-
-

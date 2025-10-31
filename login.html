@@ -13,9 +13,22 @@
       gtag('config', 'G-G1N2QCDNHH');
     </script>
     <meta charset="utf-8">
-    <title>PantherVenue - Log In</title>
+    <title>Williamstown High School — Portal</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link href="https://cloud-eliqwphhl-hack-club-bot.vercel.app/0untitled_design__13_.png" rel="icon" type="image/png">
+    <script src="js/config.js"></script>
+    <script src="js/site-runtime.js"></script>
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem('schedra:authState')) {
+            document.documentElement.classList.add('schedra-auth-await');
+          }
+        } catch (err) {
+          /* localStorage may be unavailable */
+        }
+      })();
+    </script>
     
     <!-- Original Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800" rel="stylesheet">
@@ -68,15 +81,16 @@
         .nav-menu a { padding: 8px; text-decoration: none; display: inline-block; color: rgba(255, 255, 255, 0.8); font-family: "Raleway", sans-serif; font-weight: 600; font-size: 14px; outline: none; }
         .nav-menu .menu-active a, .nav-menu a:hover { color: #fff; }
         .nav-menu > li { margin-left: 8px; }
-        .nav-menu > li > a:before { content: ""; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: #f82249; visibility: hidden; transition: all 0.3s ease-in-out 0s; }
+        .nav-menu > li > a:before { content: ""; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: #26b2e4; visibility: hidden; transition: all 0.3s ease-in-out 0s; }
         .nav-menu a:hover:before, .nav-menu li:hover > a:before, .nav-menu .menu-active > a:before { visibility: visible; width: 100%; }
-        .nav-menu li.buy-tickets a { color: #fff; background: #f82249; padding: 7px 22px; border-radius: 50px; border: 2px solid #f82249; transition: all ease-in-out 0.3s; font-weight: 500; margin-left: 8px; margin-top: 2px; line-height: 1; font-size: 13px; }
+        .nav-menu li.buy-tickets a { color: #fff; background: #1c3fa8; padding: 7px 22px; border-radius: 50px; border: 2px solid #1c3fa8; transition: all ease-in-out 0.3s; font-weight: 500; margin-left: 8px; margin-top: 2px; line-height: 1; font-size: 13px; }
         .nav-menu li.buy-tickets a:hover { background: none; text-decoration: none; }
         .nav-menu ul { margin: 4px 0 0 0; padding: 10px; box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25); background: #fff; border-radius: 3px; }
         .nav-menu ul li a { padding: 10px; color: #060c22; transition: 0.3s; display: block; font-size: 13px; text-transform: none; border-radius: 3px; }
-        .nav-menu ul li:hover > a { background: #f82249; color: #fff; }
-        #header { height: 70px; padding: 15px 0; position: fixed; left: 0; top: 0; right: 0; background: rgba(6, 12, 34, 0.98); transition: all 0.5s; z-index: 997; }
+        .nav-menu ul li:hover > a { background: #1c3fa8; color: #fff; }
+        #header { height: 70px; padding: 15px 0; position: fixed; left: 0; top: 0; right: 0; background: rgba(7, 21, 51, 0.95); transition: all 0.5s; z-index: 997; }
         #header #logo img { padding: 0; margin: 0; max-height: 40px; padding-left: 80px; }
+        #logo img { filter: brightness(0) invert(1); }
         .login-container { display: block; position: relative; width: 100%; background-color: #fff; min-height: 100vh; overflow: hidden; margin-top: 70px; font-family: 'Open Sans', sans-serif; }
         .forms-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
         .signin-signup { position: absolute; top: 50%; transform: translate(-50%, -50%); left: 75%; width: 50%; transition: 1s 0.7s ease-in-out; display: grid; grid-template-columns: 1fr; z-index: 5; }
@@ -91,14 +105,16 @@
         .social-text { padding: 0.7rem 0; font-size: 1rem; color: #6c757d; }
         .social-media { display: flex; justify-content: center; }
         .social-icon { height: 46px; width: 46px; display: flex; justify-content: center; align-items: center; margin: 0 0.45rem; color: #2f3138; border-radius: 50%; border: 1px solid #2f3138; text-decoration: none; font-size: 1.1rem; transition: 0.3s; }
-        .social-icon:hover { color: #f82249; border-color: #f82249; }
-        .btn { width: 150px; background-color: #f82249; border: none; outline: none; height: 49px; border-radius: 49px; color: #fff; text-transform: uppercase; font-weight: 600; margin: 10px 0; cursor: pointer; transition: 0.5s; font-family: 'Raleway', sans-serif; }
-        .btn:hover { 
-    background-color: #ca1231;
-    color: #fff; /* This line keeps the text white on hover */
+        .social-icon:hover { color: #1c3fa8; border-color: #1c3fa8; }
+        .btn { width: 150px; background: linear-gradient(90deg, #1c3fa8 0%, #26b2e4 100%); border: none; outline: none; height: 49px; border-radius: 49px; color: #fff; text-transform: uppercase; font-weight: 600; margin: 10px 0; cursor: pointer; transition: 0.5s; font-family: "Raleway", sans-serif; box-shadow: 0 10px 25px rgba(28,63,168,0.18); }
+        .btn:hover {
+    background: linear-gradient(90deg, #102a56 0%, #1c3fa8 100%);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(16,42,86,0.2);
 }
         .panels-container { position: absolute; height: 100%; width: 100%; top: 0; left: 0; display: grid; grid-template-columns: repeat(2, 1fr); }
-        .login-container:before { content: ""; position: absolute; height: 2000px; width: 2000px; top: -10%; right: 48%; transform: translateY(-50%); background-image: linear-gradient(-45deg, #f82249 0%, #f82249 100%); transition: 1.8s ease-in-out; border-radius: 50%; z-index: 6; }
+        .login-container:before { content: ""; position: absolute; height: 2000px; width: 2000px; top: -10%; right: 48%; transform: translateY(-50%); background-image: linear-gradient(-45deg, #1c3fa8 0%, #26b2e4 100%); transition: 1.8s ease-in-out; border-radius: 50%; z-index: 6; }
         .image { width: 100%; transition: transform 1.1s ease-in-out; transition-delay: 0.4s; }
         .panel { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-around; text-align: center; z-index: 6; }
         .left-panel { pointer-events: all; padding: 3rem 17% 2rem 12%; }
@@ -144,12 +160,12 @@
             .login-container.sign-up-mode:before { bottom: 28%; left: 50%; }
         }
         .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 999; }
-        .error-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 0 30px rgba(248,34,73,0.2); text-align: center; min-width: 300px; max-width: 400px; z-index: 1000; display: none; font-family: 'Raleway', sans-serif; }
+        .error-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 0 30px rgba(28,63,168,0.18); text-align: center; min-width: 300px; max-width: 400px; z-index: 1000; display: none; font-family: 'Raleway', sans-serif; }
         .error-popup.active { display: block; }
         .popup-close { position: absolute; top: 15px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #2f3138; transition: all 0.3s; }
-        .popup-close:hover { color: #f82249; }
+        .popup-close:hover { color: #1c3fa8; }
         .error-icon { font-size: 3rem; margin-bottom: 1.5rem; }
-        .success-message { color: #f82249; font-weight: bold; font-size: 0.9rem; margin-top: -5px; margin-bottom: 10px; display: none; text-align: center; }
+        .success-message { color: #1c3fa8; font-weight: bold; font-size: 0.9rem; margin-top: -5px; margin-bottom: 10px; display: none; text-align: center; }
         .countdown { font-size: 1.1rem; font-weight: 600; }
         :root {
             --grey: #F1F0F6; --dark-grey: #8D8D8D; --light: #fff; --dark: #000;
@@ -182,7 +198,7 @@
         main .content-data .head h3 { font-size: 20px; font-weight: 600; }
         .dashboard-wrapper, .user-dashboard-wrapper {
             display: none; position: fixed; top: 70px; left: 0; width: 100%; height: calc(100% - 70px);
-            background: linear-gradient(-45deg, #f82249 0%, #f82249 100%); z-index: 999; overflow-y: auto;
+            background: linear-gradient(-45deg, #1c3fa8 0%, #26b2e4 100%); z-index: 999; overflow-y: auto;
             font-family: 'Open Sans', sans-serif;
         }
         .dashboard-wrapper main.content, .user-dashboard-wrapper main.content {
@@ -193,10 +209,10 @@
         .card { border: none; box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); border-radius: 0.375rem; }
         .table { background: white; border-radius: 0.375rem; overflow: hidden; }
         .badge { font-weight: 500; }
-        .fa-chart-line, .fa-users, .fa-ticket-alt, .fa-calendar-alt, .fa-dollar-sign { font-size: 1.5rem; color: #f82249; }
+        .fa-chart-line, .fa-users, .fa-ticket-alt, .fa-calendar-alt, .fa-dollar-sign { font-size: 1.5rem; color: #1c3fa8; }
         .venue-popup, .event-details-popup, .request-popup {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white;
-            padding: 2rem; border-radius: 20px; box-shadow: 0 0 30px rgba(248,34,73,0.2); text-align: center;
+            padding: 2rem; border-radius: 20px; box-shadow: 0 0 30px rgba(28,63,168,0.18); text-align: center;
             min-width: 300px; max-width: 600px; z-index: 1000; display: none; font-family: 'Raleway', sans-serif;
             max-height: 80vh; overflow-y: auto;
         }
@@ -228,10 +244,10 @@
         .status-badge.declined { background: #fee2e2; color: #dc2626; }
         .form-step { display: none; }
         .form-step.active { display: block; animation: slideIn 0.3s ease-out; }
-        .form-progress { height: 4px; background: #fee2e2; border-radius: 2px; overflow: hidden; }
-        .form-progress-bar { height: 100%; background: #ef4444; transition: width 0.3s ease; }
-        .form-step-indicator { width: 2.5rem; height: 2.5rem; border: 2px solid #fca5a5; color: #ef4444; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: 600; }
-        .form-step-indicator.active { background: #ef4444; color: white; border-color: #ef4444; }
+        .form-progress { height: 4px; background: #dbeafe; border-radius: 2px; overflow: hidden; }
+        .form-progress-bar { height: 100%; background: #1c3fa8; transition: width 0.3s ease; }
+        .form-step-indicator { width: 2.5rem; height: 2.5rem; border: 2px solid #93c5fd; color: #1c3fa8; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: 600; }
+        .form-step-indicator.active { background: #1c3fa8; color: white; border-color: #1c3fa8; }
         #user-list-view { width: 100%; border-radius: 8px; overflow: hidden; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
         #user-list-view .event-row { display: flex; align-items: center; justify-content: space-between; padding: 1rem; border-bottom: 1px solid #eee; transition: background 0.3s ease; }
         #user-list-view .event-row:hover { background: #f8f9fa; }
@@ -242,38 +258,38 @@
         #user-list-view .event-info h3 { font-size: 1.25rem; font-weight: bold; color: #2f3138; margin-bottom: 0.5rem; }
         #user-list-view .meta { display: flex; flex-wrap: wrap; gap: 1rem; color: #6c757d; font-size: 0.9rem; }
         #user-list-view .event-action { flex: 0 0 200px; display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; }
-        #user-list-view .event-action .price { font-size: 1rem; font-weight: 600; color: #f82249; }
-        #user-list-view .event-action button { background: #f82249; color: white; padding: 0.5rem 1.5rem; border-radius: 20px; border: none; font-size: 0.9rem; cursor: pointer; transition: background 0.3s ease; }
-        #user-list-view .event-action button:hover { background: #e61e40; }
+        #user-list-view .event-action .price { font-size: 1rem; font-weight: 600; color: #1c3fa8; }
+        #user-list-view .event-action button { background: #1c3fa8; color: white; padding: 0.5rem 1.5rem; border-radius: 20px; border: none; font-size: 0.9rem; cursor: pointer; transition: background 0.3s ease; }
+        #user-list-view .event-action button:hover { background: #102a56; }
         .login-container .panel .content h3 { font-size: 2.5rem !important; color: #fff !important; margin-bottom: 0rem !important; font-weight: 700 !important; }
         .login-container .panel .content p { font-family: 'Open Sans', sans-serif !important; font-size: 1.1rem !important; color: rgba(255,255,255,0.9) !important; line-height: 1.6 !important; margin-bottom: 1rem !important; }
         .login-container .btn.transparent { background: transparent !important; border: 2px solid #fff !important; color: #fff !important; transition: all 0.3s ease !important; }
          .panels-container .panel .btn.transparent:hover {
     background-color: #fff !important;
-    color: #f82249 !important; /* Explicitly set the hover text color to red */
+    color: #1c3fa8 !important;
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
-        .login-container .input-field:focus-within { box-shadow: 0 0 0 2px #f82249 !important; background: #fff !important; }
-        .login-container .input-field:focus-within i { color: #f82249 !important; }
+        .login-container .input-field:focus-within { box-shadow: 0 0 0 2px #1c3fa8 !important; background: #fff !important; }
+        .login-container .input-field:focus-within i { color: #1c3fa8 !important; }
         #mobile-nav-toggle { position: fixed; right: 0; top: 0; z-index: 999; margin: 15px 15px 0 0; border: 0; background: none; font-size: 24px; display: none; transition: all 0.4s; outline: none; cursor: pointer; }
         #mobile-nav-toggle i { color: #fff; }
         #mobile-nav { position: fixed; top: 0; padding-top: 18px; bottom: 0; z-index: 998; background: rgba(6, 12, 34, 0.9); left: -260px; width: 260px; overflow-y: auto; transition: 0.4s; }
         #mobile-nav ul { padding: 0; margin: 0; list-style: none; }
         #mobile-nav ul li { position: relative; }
         #mobile-nav ul li a { color: #fff; font-size: 17px; padding: 10px 22px 10px 15px; display: block; text-decoration: none; }
-        #mobile-nav ul li a:hover { color: #f82249; }
+        #mobile-nav ul li a:hover { color: #1c3fa8; }
         #mobile-body-overly { width: 100%; height: 100%; z-index: 997; top: 0; left: 0; position: fixed; background: rgba(6, 12, 34, 0.8); display: none; }
         @media (max-width: 991px) { #mobile-nav-toggle { display: block; } #nav-menu-container { display: none; } }
         body.mobile-nav-active #mobile-nav { left: 0 !important; }
         #mobile-nav { transition: all 0.3s ease-in-out !important; }
         #header { z-index: 1001 !important; }
         .flatpickr-calendar { font-family: 'Open Sans', sans-serif; }
-        .flatpickr-day.today { background-color: #f82249; color: #fff; font-weight: bold; position: relative; }
+        .flatpickr-day.today { background-color: #1c3fa8; color: #fff; font-weight: bold; position: relative; }
         .flatpickr-day.today:after { content: ''; position: absolute; bottom: 2px; right: 2px; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 5px solid #fff; }
-        .flatpickr-day.event { background-color: #ff6b6b00; color: #000000; position: relative; }
-        .flatpickr-day.event:after { content: ''; position: absolute; bottom: 2px; right: 2px; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 5px solid #f80000; }
-        .flatpickr-day.event:hover { background-color: #ff8787; }
+        .flatpickr-day.event { background-color: rgba(28,63,168,0.12); color: #071533; position: relative; }
+        .flatpickr-day.event:after { content: ''; position: absolute; bottom: 2px; right: 2px; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 5px solid #1c3fa8; }
+        .flatpickr-day.event:hover { background-color: rgba(38,178,228,0.2); }
         
         /* Ticket Purchase */
         .ticket-popup {
@@ -286,7 +302,7 @@
             max-width: 800px;
             border-radius: 20px;
             padding: 2rem;
-            box-shadow: 0 0 40px rgba(248,34,73,0.2);
+            box-shadow: 0 0 40px rgba(28,63,168,0.18);
             z-index: 10000;
             display: none;
             opacity: 0;
@@ -364,8 +380,8 @@
         }
         .form-group input:focus {
             outline: none;
-            border-color: #f82249;
-            box-shadow: 0 0 0 3px rgba(248,34,73,0.1);
+            border-color: #1c3fa8;
+            box-shadow: 0 0 0 3px rgba(38,178,228,0.18);
         }
         .cc-group {
             display: grid;
@@ -373,7 +389,7 @@
             gap: 1rem;
         }
         .purchase-button {
-            background: #f82249;
+            background: linear-gradient(90deg, #1c3fa8 0%, #26b2e4 100%);
             color: white;
             width: 100%;
             padding: 1rem;
@@ -384,7 +400,9 @@
             transition: all 0.3s ease;
         }
         .purchase-button:hover {
-            background: #e61e40;
+            background: linear-gradient(90deg, #102a56 0%, #1c3fa8 100%);
+            box-shadow: 0 12px 28px rgba(16,42,86,0.2);
+            transform: translateY(-2px);
         }
         .ticket-popup {
             max-width: 95%;
@@ -394,37 +412,37 @@
         }
 
         .mock-event-tile { background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
-        .price-tag { background: #f82249; color: white; padding: 0.4rem 1rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem; min-width: 70px; text-align: center; }
+        .price-tag { background: #1c3fa8; color: white; padding: 0.4rem 1rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem; min-width: 70px; text-align: center; }
         .event-meta { display: flex; gap: 1rem; align-items: center; color: #6c757d; font-size: 0.875rem; }
         .event-description { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; min-height: 72px; margin-bottom: 1rem; }
 
         .arena-container, .arena-container2 { transform: scale(0.6); transform-origin: center; width: 166.67%; height: 166.67%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.6); }
-        .arena-container { position: relative; border: 4px solid #a00000; background: rgba(224, 7, 47, 0.276); border-radius: 30px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); min-height: 600px; margin: 2rem auto; max-width: 1200px; }
-        .arena-container2 { position: relative; border: 4px solid #a00000; background: rgba(224, 7, 47, 0.276); border-radius: 30px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); min-height: 600px; margin: 2rem auto; max-width: 1200px; }
-        .arena-container::after, .arena-container2::after { content: ''; position: absolute; top: 60px; left: 60px; right: 60px; bottom: 60px; border: 4px solid #a00000; pointer-events: none; z-index: 1; border-radius: 2px; background: #fff; }
-        .capacity-section { position: absolute; background: transparent !important; color: #490b15; display: flex; align-items: center; justify-content: center; font-weight: 600; z-index: 2; padding: 8px; border: none !important; cursor: pointer; transition: all 0.3s ease; }
-        .north { top: 4px; left: 60px; right: 60px; height: 40px; border-top: 2px solid #a00000; border-bottom: 2px solid #a00000; }
-        .south { bottom: 4px; left: 60px; right: 60px; height: 40px; border-bottom: 2px solid #a00000; border-top: 2px solid #a00000; }
+        .arena-container { position: relative; border: 4px solid #1c3fa8; background: rgba(28, 63, 168, 0.12); border-radius: 30px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); min-height: 600px; margin: 2rem auto; max-width: 1200px; }
+        .arena-container2 { position: relative; border: 4px solid #1c3fa8; background: rgba(28, 63, 168, 0.12); border-radius: 30px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); min-height: 600px; margin: 2rem auto; max-width: 1200px; }
+        .arena-container::after, .arena-container2::after { content: ''; position: absolute; top: 60px; left: 60px; right: 60px; bottom: 60px; border: 4px solid #1c3fa8; pointer-events: none; z-index: 1; border-radius: 2px; background: #fff; }
+        .capacity-section { position: absolute; background: transparent !important; color: #071533; display: flex; align-items: center; justify-content: center; font-weight: 600; z-index: 2; padding: 8px; border: none !important; cursor: pointer; transition: all 0.3s ease; }
+        .north { top: 4px; left: 60px; right: 60px; height: 40px; border-top: 2px solid #1c3fa8; border-bottom: 2px solid #1c3fa8; }
+        .south { bottom: 4px; left: 60px; right: 60px; height: 40px; border-bottom: 2px solid #1c3fa8; border-top: 2px solid #1c3fa8; }
         .east, .west { writing-mode: vertical-rl; transform: rotate(180deg); width: 40px; top: 60px; bottom: 60px; }
-        .east { right: 4px; padding-left: 8px; border-right: 2px solid #a00000; border-left: 2px solid #a00000; }
-        .west { left: 4px; padding-right: 8px; border-left: 2px solid #a00000; border-right: 2px solid #a00000; }
+        .east { right: 4px; padding-left: 8px; border-right: 2px solid #1c3fa8; border-left: 2px solid #1c3fa8; }
+        .west { left: 4px; padding-right: 8px; border-left: 2px solid #1c3fa8; border-right: 2px solid #1c3fa8; }
         .main-floor { position: absolute; top: 100px; left: 100px; right: 100px; bottom: 100px; background: #fff; z-index: 2; overflow: hidden; }
         .main-floor2 { position: absolute; top: 60px; left: 60px; right: 60px; bottom: 60px; display: flex; align-items: center; justify-content: center; z-index: 2; }
-        .court-text { font-size: 3rem; font-weight: bold; color: #a00000; z-index: 10; text-align: center; }
+        .court-text { font-size: 3rem; font-weight: bold; color: #1c3fa8; z-index: 10; text-align: center; }
         .court-subtext { font-size: 2rem; color: #666; z-index: 10; text-align: center; }
-        .stage-container { position: absolute; top: 80px; left: 80px; right: 80px; height: 60px; z-index: 3; border-radius: 15px; background: #a00000; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.5rem; }
-        .stage { background: #d8526b; color: white; height: 100%; width: 100%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.3rem; border-radius: 15px; }
+        .stage-container { position: absolute; top: 80px; left: 80px; right: 80px; height: 60px; z-index: 3; border-radius: 15px; background: #1c3fa8; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.5rem; }
+        .stage { background: #102a56; color: white; height: 100%; width: 100%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.3rem; border-radius: 15px; }
         .seat-group { display: grid; grid-template-rows: repeat(9, auto); gap: 15px; margin-right: 20px; }
         .seat-row { display: flex; gap: 15px; justify-content: center; height: min-content; align-items: flex-start; }
         .seat { width: 30px; height: 30px; flex-shrink: 0; background: #f1f3f5; border-radius: 4px; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; color: #000; text-align: center; overflow: hidden; padding: 5px; }
-        .seat:hover { background: #a00000; color: white !important; cursor: pointer; transform: scale(1.1); }
-        .capacity-section.selected { background: #a00000 !important; color: white !important; }
-        .capacity-section.closed { background: #ffd7d7 !important; color: #666 !important; pointer-events: none; }
+        .seat:hover { background: #1c3fa8; color: white !important; cursor: pointer; transform: scale(1.1); }
+        .capacity-section.selected { background: #1c3fa8 !important; color: white !important; }
+        .capacity-section.closed { background: #e2eefc !important; color: #666 !important; pointer-events: none; }
         .seat.available { background: #a83232; }
         .seat.sold-out { background: #ccc; pointer-events: none; }
-        .seat.selected { background: #ff0000; box-shadow: 0 0 5px #ff0000; color: white !important; }
+        .seat.selected { background: #102a56; box-shadow: 0 0 5px #102a56; color: white !important; }
         .dashboard-title, .admin-dashboard-title { font-size: 1.6875rem; font-weight: 700; color: #2d3748; font-family: 'Open Sans', sans-serif; }
-        .dashboard-title span, .admin-dashboard-title strong { color: #f82249; }
+        .dashboard-title span, .admin-dashboard-title strong { color: #1c3fa8; }
         .btn-decline { background-color: #dc3545; color: white; }
         .btn-pending { background-color: #ffc107; color: white; }
         .btn-accept { background-color: #28a745; color: white; }
@@ -437,15 +455,46 @@
             flex: 0 0 50%;
             max-width: 50%;
         }
+        .dashboard-loader {
+            display: none;
+            min-height: calc(100vh - 70px);
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            gap: 1.5rem;
+            padding: 2rem;
+            color: #2f3138;
+            font-family: 'Open Sans', sans-serif;
+        }
+        .dashboard-loader .loader-spinner {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 6px solid rgba(248, 34, 73, 0.2);
+            border-top-color: #1c3fa8;
+            animation: dashboard-spin 1s linear infinite;
+        }
+        @keyframes dashboard-spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .schedra-auth-await body[data-page="login"] .dashboard-loader {
+            display: flex;
+        }
+        .schedra-auth-await body[data-page="login"] .login-container {
+            display: none !important;
+        }
     </style>
 </head>
-<body>
+<body data-page="login">
     <!-- Header -->
     <header id="header">
         <div class="container">
             <div id="logo" class="pull-left">
                 <a href="home.html" class="scrollto">
-                    <img src="https://cloud-lrd7zzrnx-hack-club-bot.vercel.app/0untitled__2357_x_778_px___2_.png" alt="PantherVenue Logo">
+                    <img src="navImage.png" alt="Williamstown High School Crest">
                 </a>
             </div>
             <nav id="nav-menu-container">
@@ -473,6 +522,11 @@
         </ul>
     </nav>
     <div id="mobile-body-overly"></div>
+
+    <div id="dashboardLoader" class="dashboard-loader" role="status" aria-live="polite">
+        <div class="loader-spinner"></div>
+        <p>Loading your dashboard...</p>
+    </div>
 
 
     <div id="flyer-generator-container" style="position: fixed; left: -9999px; top: -9999px; width: 1080px; height: 1350px; overflow: hidden; background-color: #ccc; font-family: 'Poppins', sans-serif;">
@@ -505,7 +559,7 @@
                 <main class="content">
                     <div class="container-fluid p-0">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h1 class="h3 admin-dashboard-title"><strong>PantherVenue Analytics</strong> Dashboard</h1>
+                            <h1 class="h3 admin-dashboard-title"><strong>Williamstown Analytics</strong> Dashboard</h1>
                             <button onclick="handleLogout()" class="btn btn-danger">log out</button>
                         </div>
                         <div class="row">
@@ -684,9 +738,9 @@
                                             <div class="card rent-venue-box" style="height: 258px;">
                                                 <div class="card-body">
                                                     <h5 class="card-title">Rent Venue</h5>
-                                                    <p class="rent-venue-note" >Host your event at PantherVenue. <br>
+                                                    <p class="rent-venue-note" >Host your event at Williamstown High School. <br>
                                                         Questions? Visit the 
-                                                        <a href="index.html#faq" class="text-red-500 underline decoration-red-500 decoration-2 hover:text-red-700 hover:decoration-red-700">F.A.Q. page.</a>
+                                                        <a href="index.html#faq" class="text-blue-500 underline decoration-blue-500 decoration-2 hover:text-blue-700 hover:decoration-blue-700">F.A.Q. page.</a>
                                                     </p>
                                                     <div style="text-align: center; margin-top: 1px;">
                                                         <a href="rent.html" class="btn btn-primary" style="padding: 12px 24px; font-size: 16px; line-height: 1.5; display: inline-block;">Rent Now</a>
@@ -737,12 +791,12 @@
                 <table class="schedule-table" id="popupScheduleTable"></table>
                 <div class="availability">
                     <span>Selected Seats:</span>
-                    <span class="font-bold text-red-600" id="selectedSeatsText">None</span>
+                    <span class="font-bold text-blue-600" id="selectedSeatsText">None</span>
                 </div>
             </div>
             <div class="registration-form">
                 <h3 class="text-xl font-bold mb-4">Registration Details</h3>
-                <div id="totalCost" class="text-red-600 text-4xl font-bold mb-4 text-center"></div>
+                <div id="totalCost" class="text-blue-600 text-4xl font-bold mb-4 text-center"></div>
                 <!-- This form is now for display only -->
                 <form id="ticketForm">
                     <div class="form-group"><label>Name</label><input type="text" id="fullName" readonly></div>
@@ -838,7 +892,7 @@
             <div class="panel right-panel">
                 <div class="content">
                     <h3>Have an account?</h3>
-                    <p>Welcome back! Log in to continue your experience with PantherVenue.</p>
+                    <p>Welcome back! Log in to continue your experience with Williamstown High School.</p>
                     <button class="btn transparent" id="sign-in-btn">Log in</button>
                 </div>
                 <img src="img/register.svg" class="image" alt="" />
@@ -853,7 +907,8 @@
 
     <!-- Firebase Configuration -->
     <script>
-      const firebaseConfig = {
+      const runtime = window.SchedraSite || null;
+      const firebaseConfig = runtime && runtime.getFirebaseConfig ? runtime.getFirebaseConfig() : {
         apiKey: "AIzaSyC0BYFCxwgu3tHp_3oeLsxoMBpyDRnj8IA",
         authDomain: "panthervenue.firebaseapp.com",
         projectId: "panthervenue",
@@ -862,9 +917,21 @@
         appId: "1:15387964560:web:b9dbc68e3a97dd466b5415"
       };
       
-      firebase.initializeApp(firebaseConfig);
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+      }
       const auth = firebase.auth();
       const db = firebase.firestore();
+      const collections = runtime && runtime.getCollections ? runtime.getCollections() : {};
+      const eventsConfig = runtime && runtime.getEventsConfig ? runtime.getEventsConfig() : {};
+      const usersCollection = collections.users || 'users_williamstown';
+      const eventsCollection = collections.events || 'events_williamstown';
+      const rentalsCollection = collections.rentals || 'rental_requests_williamstown';
+      const ticketsCollection = collections.tickets || collections.registrations || 'tickets_williamstown';
+      const newsletterCollection = collections.newsletter || 'newsletter_williamstown';
+      const fallbackSchoolId = runtime && runtime.getConfig ? (runtime.getConfig().defaultSchoolId || 'williamstown') : 'williamstown';
+      const schoolId = runtime && runtime.getActiveSchoolId ? runtime.getActiveSchoolId() : fallbackSchoolId;
+      const scheduleTemplates = eventsConfig.schedules || {};
     </script>
     
     <!-- Main Application Logic (Firebase Integrated) -->
@@ -874,22 +941,79 @@
             let pieChart;
             let flatpickrInstance;
 
+            const AUTH_STORAGE_KEY = 'schedra:authState';
+            const htmlElement = document.documentElement;
+            const dashboardLoader = document.getElementById('dashboardLoader');
+
+            const persistAuthState = (payload) => {
+                try {
+                    if (payload) {
+                        localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(payload));
+                    } else {
+                        localStorage.removeItem(AUTH_STORAGE_KEY);
+                    }
+                } catch (err) {
+                    /* ignore storage issues */
+                }
+            };
+            const clearAuthState = () => persistAuthState(null);
+            const hideAuthLoader = () => {
+                if (dashboardLoader) {
+                    dashboardLoader.style.display = 'none';
+                }
+                htmlElement.classList.remove('schedra-auth-await');
+            };
+
             const loginContainer = document.querySelector('.login-container');
             const adminDashboard = document.querySelector('.dashboard-wrapper');
             const userDashboard = document.querySelector('.user-dashboard-wrapper');
-            const loginLink = document.getElementById('loginLink');
+            const loginLink = document.getElementById('loginLink') || document.getElementById('loginButton');
             const mobileLoginLink = document.getElementById('mobileLoginLink');
+
+            const applyNavState = (label, href, attach) => {
+                if (loginLink) {
+                    loginLink.textContent = label;
+                    loginLink.href = href;
+                    if (attach) {
+                        loginLink.addEventListener('click', preventNavigationIfLoggedIn);
+                    } else {
+                        loginLink.removeEventListener('click', preventNavigationIfLoggedIn);
+                    }
+                }
+                if (mobileLoginLink) {
+                    mobileLoginLink.textContent = label;
+                    mobileLoginLink.href = href;
+                    if (attach) {
+                        mobileLoginLink.addEventListener('click', preventNavigationIfLoggedIn);
+                    } else {
+                        mobileLoginLink.removeEventListener('click', preventNavigationIfLoggedIn);
+                    }
+                }
+            };
+
+            try {
+                const storedAuthState = JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY) || 'null');
+                if (storedAuthState) {
+                    applyNavState('Dashboard', '#', true);
+                }
+            } catch (err) {
+                /* ignore parse errors */
+            }
             
-            const showPopup = (title, message, isSuccess = false) => { const popup = document.getElementById('errorPopup'); const overlay = document.getElementById('popupOverlay'); if(!popup || !overlay) return; const icon = popup.querySelector('.error-icon'); popup.querySelector('#popupTitle').textContent = title; popup.querySelector('#popupMessage').textContent = message; icon.className = isSuccess ? 'fas fa-check-circle error-icon' : 'fas fa-exclamation-circle error-icon'; icon.style.color = isSuccess ? '#4CAF50' : '#f82249'; popup.classList.add('active'); overlay.style.display = 'block'; };
+            const showPopup = (title, message, isSuccess = false) => { const popup = document.getElementById('errorPopup'); const overlay = document.getElementById('popupOverlay'); if(!popup || !overlay) return; const icon = popup.querySelector('.error-icon'); popup.querySelector('#popupTitle').textContent = title; popup.querySelector('#popupMessage').textContent = message; icon.className = isSuccess ? 'fas fa-check-circle error-icon' : 'fas fa-exclamation-circle error-icon'; icon.style.color = isSuccess ? '#4CAF50' : '#1c3fa8'; popup.classList.add('active'); overlay.style.display = 'block'; };
 
                      // ADDED: Flyer Generation Function
             window.generateFlyer = async function(eventId) {
-                const eventDoc = await db.collection('events').doc(eventId).get();
+                const eventDoc = await db.collection(eventsCollection).doc(eventId).get();
                 if (!eventDoc.exists) {
                     showPopup('Error', 'Event details could not be found to generate a flyer.');
                     return;
                 }
                 const event = eventDoc.data();
+                if (event.schoolId && event.schoolId !== schoolId) {
+                    showPopup('Notice', 'This event belongs to a different school profile.');
+                    return;
+                }
 
                 const flyerContainer = document.getElementById('flyer-generator-container');
                 const qrContainer = document.getElementById('flyer-gen-qr-code');
@@ -933,7 +1057,7 @@
                   
                             const link = document.createElement('a');
                             link.href = url;
-                            link.download = `PantherVenue_${event.title.replace(/\s+/g, '_')}_Flyer.png`;
+                            link.download = `Williamstown_${event.title.replace(/\s+/g, '_')}_Flyer.png`;
 
                             // Add it, click it, remove it!
                             document.body.appendChild(link);
@@ -952,55 +1076,96 @@
 
                 if (user) {
                     try {
-                        const userDoc = await db.collection("users").doc(user.uid).get();
-                        if (!userDoc.exists) throw new Error("User data not found in Firestore.");
-                        
-                        currentUser = { uid: user.uid, email: user.email, ...userDoc.data() };
-                        
+                    let userDoc = await db.collection(usersCollection).doc(user.uid).get();
+                    let userData = userDoc.exists ? (userDoc.data() || {}) : {};
+                    const fallbackUsername = (user.email || '').split('@')[0] || 'User';
+                    const patches = {};
+                    if (!userDoc.exists) {
+                        patches.created = firebase.firestore.FieldValue.serverTimestamp();
+                    }
+                    if (!userData.username) {
+                        patches.username = fallbackUsername;
+                    }
+                    if (!userData.email) {
+                        patches.email = user.email || '';
+                    }
+                    if (typeof userData.isAdmin !== 'boolean') {
+                        patches.isAdmin = false;
+                    }
+                    if (!userData.schoolId || userData.schoolId !== schoolId) {
+                        patches.schoolId = schoolId;
+                    }
+                    if (Object.keys(patches).length) {
+                        await db.collection(usersCollection).doc(user.uid).set(patches, { merge: true });
+                        userDoc = await db.collection(usersCollection).doc(user.uid).get();
+                        userData = userDoc.exists ? (userDoc.data() || {}) : { ...userData, ...patches };
+                    }
+
+                    currentUser = {
+                        uid: user.uid,
+                        email: user.email || userData.email || '',
+                        username: userData.username || fallbackUsername,
+                        isAdmin: !!userData.isAdmin,
+                        schoolId: userData.schoolId || schoolId,
+                        firstName: userData.firstName || '',
+                        lastName: userData.lastName || ''
+                    };
+                        persistAuthState({
+                            uid: currentUser.uid,
+                            email: currentUser.email || '',
+                            username: currentUser.username || '',
+                            isAdmin: currentUser.isAdmin
+                        });
+
+                        const showDashboard = (animate) => {
+                            if (currentUser.isAdmin) {
+                                adminDashboard.style.display = 'block';
+                                userDashboard.style.display = 'none';
+                                if (animate) {
+                                    adminDashboard.classList.add('fade-in');
+                                    setTimeout(() => adminDashboard.classList.remove('fade-in'), 500);
+                                }
+                                updateAdminDashboard();
+                            } else {
+                                userDashboard.style.display = 'block';
+                                adminDashboard.style.display = 'none';
+                                if (animate) {
+                                    userDashboard.classList.add('fade-in');
+                                    setTimeout(() => userDashboard.classList.remove('fade-in'), 500);
+                                }
+                                loadUserDashboard();
+                            }
+                            hideAuthLoader();
+                        };
+
                         if (!wasLoggedIn) {
                             loginContainer.classList.add('fade-out');
                             setTimeout(() => {
                                 loginContainer.style.display = 'none';
                                 loginContainer.classList.remove('fade-out');
-                                if (currentUser.isAdmin) {
-                                    adminDashboard.style.display = 'block';
-                                    adminDashboard.classList.add('fade-in');
-                                    setTimeout(() => adminDashboard.classList.remove('fade-in'), 500);
-                                    updateAdminDashboard();
-                                } else {
-                                    userDashboard.style.display = 'block';
-                                    userDashboard.classList.add('fade-in');
-                                    setTimeout(() => userDashboard.classList.remove('fade-in'), 500);
-                                    loadUserDashboard();
-                                }
+                                showDashboard(true);
                             }, 500);
                         } else {
-                            if (currentUser.isAdmin) {
-                                adminDashboard.style.display = 'block';
-                                userDashboard.style.display = 'none';
-                                updateAdminDashboard();
-                            } else {
-                                userDashboard.style.display = 'block';
-                                adminDashboard.style.display = 'none';
-                                loadUserDashboard();
-                            }
                             loginContainer.style.display = 'none';
+                            showDashboard(false);
                         }
-                        
-                        loginLink.textContent = 'Dashboard';
-                        mobileLoginLink.textContent = 'Dashboard';
-                        loginLink.href = "#";
-                        mobileLoginLink.href = "#";
-                        loginLink.addEventListener('click', preventNavigationIfLoggedIn);
-                        mobileLoginLink.addEventListener('click', preventNavigationIfLoggedIn);
+                        applyNavState('Dashboard', '#', true);
 
                     } catch (error) {
                         console.error("Error fetching user profile:", error);
                         showPopup('Error', 'Could not load your profile. Please log out and try again.');
+                        clearAuthState();
+                        hideAuthLoader();
                         await handleLogout();
                     }
                 } else {
                     currentUser = null;
+                    clearAuthState();
+                    const finalizeLoggedOut = () => {
+                        hideAuthLoader();
+                        applyNavState('Log In', 'login.html', false);
+                    };
+
                     if (wasLoggedIn) {
                         adminDashboard.classList.add('fade-out');
                         userDashboard.classList.add('fade-out');
@@ -1012,19 +1177,14 @@
                             loginContainer.style.display = 'block';
                             loginContainer.classList.add('fade-in');
                             setTimeout(() => loginContainer.classList.remove('fade-in'), 500);
+                            finalizeLoggedOut();
                         }, 500);
                     } else {
                         adminDashboard.style.display = 'none';
                         userDashboard.style.display = 'none';
                         loginContainer.style.display = 'block';
+                        finalizeLoggedOut();
                     }
-
-                    loginLink.textContent = 'Log In';
-                    mobileLoginLink.textContent = 'Log In';
-                    loginLink.href = "login.html";
-                    mobileLoginLink.href = "login.html";
-                    loginLink.removeEventListener('click', preventNavigationIfLoggedIn);
-                    mobileLoginLink.removeEventListener('click', preventNavigationIfLoggedIn);
                 }
             });
 
@@ -1042,10 +1202,11 @@
                 try {
                     const isAdmin = (email === 'anvay@panthervenue.com' && username === 'anvay_admin');
                     const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-                    await db.collection("users").doc(userCredential.user.uid).set({ //debugging checkpoint
+                    await db.collection(usersCollection).doc(userCredential.user.uid).set({ //debugging checkpoint
                         username: username,
                         email: email,
                         isAdmin: isAdmin,
+                        schoolId: schoolId,
                         created: firebase.firestore.FieldValue.serverTimestamp()
                     });
                     await auth.signOut();
@@ -1084,6 +1245,7 @@
             window.handleLogout = async function() {
                 try {
                     await auth.signOut();
+                    clearAuthState();
                 } catch (error) {
                     console.error("Logout error:", error);
                     showPopup('Error', 'Failed to log out. Please try again.');
@@ -1093,14 +1255,25 @@
             async function updateAdminDashboard() {
                 if (!currentUser || !currentUser.isAdmin) return;
                 const [registrationsSnapshot, eventsSnapshot, requestsSnapshot] = await Promise.all([
-                    db.collection('registrations').get(),
-                    db.collection('events').get(),
-                    db.collection('requests').orderBy('created', 'desc').get()
+                    db.collection(ticketsCollection).get(),
+                    db.collection(eventsCollection).get(),
+                    db.collection(rentalsCollection).get()
                 ]);
 
-                const registrations = registrationsSnapshot.docs.map(doc => doc.data());
-                const events = eventsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                const requests = requestsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                const registrations = registrationsSnapshot.docs
+                    .map(doc => ({ id: doc.id, ...doc.data() }))
+                    .filter(reg => !schoolId || !reg.schoolId || reg.schoolId === schoolId);
+                const events = eventsSnapshot.docs
+                    .map(doc => ({ id: doc.id, ...doc.data() }))
+                    .filter(evt => !schoolId || !evt.schoolId || evt.schoolId === schoolId);
+                const requests = requestsSnapshot.docs
+                    .map(doc => ({ id: doc.id, ...doc.data() }))
+                    .filter(req => !schoolId || !req.schoolId || req.schoolId === schoolId)
+                    .sort((a, b) => {
+                        const aTime = a.created && typeof a.created.toMillis === 'function' ? a.created.toMillis() : 0;
+                        const bTime = b.created && typeof b.created.toMillis === 'function' ? b.created.toMillis() : 0;
+                        return bTime - aTime;
+                    });
                 
                 const baseSales = 8;
                 const baseTickets = 4;
@@ -1156,18 +1329,32 @@
 
             async function loadUserDashboard() {
                 if (!currentUser) return;
-                document.getElementById('dashboard-title').innerHTML = `<span style="color: #f82249;">${currentUser.username}'s</span> Personalized Dashboard`;
+                document.getElementById('dashboard-title').innerHTML = `<span style="color: #1c3fa8;">${currentUser.username}'s</span> Personalized Dashboard`;
 
                 const [registrationsSnapshot, requestsSnapshot] = await Promise.all([
-                    db.collection('registrations').where('userId', '==', currentUser.uid).orderBy('created', 'desc').get(),
-                    db.collection('requests').where('userId', '==', currentUser.uid).orderBy('created', 'desc').get()
+                    db.collection(ticketsCollection).where('userId', '==', currentUser.uid).get(),
+                    db.collection(rentalsCollection).where('userId', '==', currentUser.uid).get()
                 ]);
                 
-                const userRegistrations = registrationsSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
-                const userRequests = requestsSnapshot.docs.map(doc => doc.data());
+                const userRegistrations = registrationsSnapshot.docs
+                    .map(doc => ({ id: doc.id, ...doc.data() }))
+                    .filter(reg => (!schoolId || !reg.schoolId || reg.schoolId === schoolId))
+                    .sort((a, b) => {
+                        const aTime = a.created && typeof a.created.toMillis === 'function' ? a.created.toMillis() : 0;
+                        const bTime = b.created && typeof b.created.toMillis === 'function' ? b.created.toMillis() : 0;
+                        return bTime - aTime;
+                    });
+                const userRequests = requestsSnapshot.docs
+                    .map(doc => ({ id: doc.id, ...doc.data() }))
+                    .filter(req => (!schoolId || !req.schoolId || req.schoolId === schoolId))
+                    .sort((a, b) => {
+                        const aTime = a.created && typeof a.created.toMillis === 'function' ? a.created.toMillis() : 0;
+                        const bTime = b.created && typeof b.created.toMillis === 'function' ? b.created.toMillis() : 0;
+                        return bTime - aTime;
+                    });
                 
-                const totalTickets = userRegistrations.reduce((sum, reg) => sum + reg.quantity, 0);
-                const totalSpent = userRegistrations.reduce((sum, reg) => sum + reg.totalCost, 0);
+                const totalTickets = userRegistrations.reduce((sum, reg) => sum + (reg.quantity || 0), 0);
+                const totalSpent = userRegistrations.reduce((sum, reg) => sum + (reg.totalCost || 0), 0);
                 document.getElementById('totalTickets').textContent = totalTickets;
                 document.getElementById('totalSpent').textContent = `$${totalSpent.toFixed(2)}`;
 
@@ -1237,9 +1424,10 @@ updateChangeElement('weeklySpentChange', calculatePercentageChange(thisWeeksSpen
                     eventsContainer.innerHTML = '<p class="p-4 text-center text-gray-600">You have not signed up for any events yet.</p>';
                 } else {
                     for (const reg of userRegistrations) {
-                        const eventDoc = await db.collection('events').doc(reg.eventId).get();
+                        const eventDoc = await db.collection(eventsCollection).doc(reg.eventId).get();
                         if (eventDoc.exists) {
                             const event = eventDoc.data();
+                            if (event.schoolId && event.schoolId !== schoolId) continue;
                             // MODIFIED PART
                             eventsContainer.innerHTML += `
                                 <div class="event-row">
@@ -1247,13 +1435,13 @@ updateChangeElement('weeklySpentChange', calculatePercentageChange(thisWeeksSpen
                                     <div class="event-info">
                                         <h3>${event.title}</h3>
                                         <div class="meta">
-                                            <span><i class="fas fa-map-marker-alt mr-2 text-red-500"></i>${event.location || 'N/A'}</span>
-                                            <span><i class="fas fa-calendar-day mr-2 text-red-500"></i>${new Date(event.date + 'T00:00:00').toLocaleDateString()}</span>
+                                            <span><i class="fas fa-map-marker-alt mr-2 text-blue-500"></i>${event.location || 'N/A'}</span>
+                                            <span><i class="fas fa-calendar-day mr-2 text-blue-500"></i>${new Date(event.date + 'T00:00:00').toLocaleDateString()}</span>
                                             <span><i class="fas fa-tag mr-2 text-gray-500"></i>${event.category || 'N/A'}</span>
                                         </div>
                                     </div>
                                     <div class="event-action">
-                                        <a href="#" onclick="event.preventDefault(); generateFlyer('${eventDoc.id}')" class="text-red-600 underline font-semibold mb-2">Download Ticket</a>
+                                        <a href="#" onclick="event.preventDefault(); generateFlyer('${eventDoc.id}')" class="text-blue-600 underline font-semibold mb-2">Download Ticket</a>
                                         <button onclick="showEventDetails('${reg.id}')">See Details</button>
                                     </div>
                                 </div>`;
@@ -1286,7 +1474,6 @@ updateChangeElement('weeklySpentChange', calculatePercentageChange(thisWeeksSpen
             document.getElementById('mobile-nav-toggle').addEventListener('click', function(e) { document.body.classList.toggle('mobile-nav-active'); this.querySelector('i').classList.toggle('fa-bars'); this.querySelector('i').classList.toggle('fa-times'); let overly = document.getElementById('mobile-body-overly'); overly.style.display = document.body.classList.contains('mobile-nav-active') ? 'block' : 'none'; });
             document.getElementById('mobile-body-overly').addEventListener('click', function() { document.body.classList.remove('mobile-nav-active'); let toggle = document.getElementById('mobile-nav-toggle').querySelector('i'); toggle.classList.remove('fa-times'); toggle.classList.add('fa-bars'); this.style.display = 'none'; });
             
-            const defaultSchedules = {"Athletics": [{ event: "Doors Open", time: "6:00 PM" }, { event: "Game Start", time: "7:00 PM" }, { event: "Game End", time: "8:00 PM" }],"Performances": [{ event: "Doors Open", time: "7:00 PM" }, { event: "Show Start", time: "7:30 PM" }, { event: "Show End", time: "9:30 PM" }],"Competitions": [{ event: "Registration", time: "8:00 AM" }, { event: "Round 1", time: "9:00 AM" }, { event: "Round 2", time: "11:00 AM" }, { event: "Finals", time: "2:00 PM" }],"Workshops": [{ event: "Session 1", time: "9:30 AM" }, { event: "Break", time: "11:00 AM" }, { event: "Session 2", time: "11:30 AM" }],"Gatherings": [{ event: "Welcome", time: "10:00 AM" }, { event: "Networking", time: "12:00 PM" }, { event: "Closing", time: "1:00 PM" }]};
             
             function generateSeats(seatingChartDiv) { const seatGroups = seatingChartDiv.querySelectorAll('.seat-group'); const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']; seatGroups.forEach((group, colIndex) => { for (let i = 0; i < 8; i++) { const seatRow = document.createElement('div'); seatRow.className = 'seat-row'; for (let seatNum = 1; seatNum <= 2; seatNum++) { const seat = document.createElement('div'); seat.className = 'seat'; const rowLetter = rows[colIndex]; const seatLabel = `${rowLetter}${i * 2 + seatNum}`; seat.textContent = seatLabel; seat.title = seatLabel; seatRow.appendChild(seat); } group.appendChild(seatRow); } }); }
             function closeTicketPopup() { const ticketPopup = document.getElementById('ticketPopup'); const ticketOverlay = document.getElementById('ticketOverlay'); if (ticketPopup) ticketPopup.classList.remove('active', 'view-mode'); if (ticketOverlay) ticketOverlay.style.display = 'none'; document.body.style.overflow = 'auto'; }
@@ -1298,13 +1485,21 @@ updateChangeElement('weeklySpentChange', calculatePercentageChange(thisWeeksSpen
                 const ticketOverlay = document.getElementById('ticketOverlay');
                 if (!ticketPopup || !ticketOverlay) return;
 
-                const regDoc = await db.collection('registrations').doc(registrationId).get();
+                const regDoc = await db.collection(ticketsCollection).doc(registrationId).get();
                 if (!regDoc.exists) { showPopup('Error', 'Registration not found'); return; }
                 const registration = regDoc.data();
+                if (registration.schoolId && registration.schoolId !== schoolId) {
+                    showPopup('Notice', 'This registration belongs to a different school profile.');
+                    return;
+                }
 
-                const eventDoc = await db.collection('events').doc(registration.eventId).get();
+                const eventDoc = await db.collection(eventsCollection).doc(registration.eventId).get();
                 if (!eventDoc.exists) { showPopup('Error', 'Associated event not found'); return; }
                 const event = eventDoc.data();
+                if (event.schoolId && event.schoolId !== schoolId) {
+                    showPopup('Notice', 'This event belongs to a different school profile.');
+                    return;
+                }
                 
                 ticketPopup.classList.add('active', 'view-mode');
                 ticketOverlay.style.display = 'block';
@@ -1354,7 +1549,7 @@ updateChangeElement('weeklySpentChange', calculatePercentageChange(thisWeeksSpen
                 
                 const scheduleTable = document.getElementById('popupScheduleTable');
                 scheduleTable.innerHTML = '';
-                const schedule = defaultSchedules[event.category] || [];
+                const schedule = (event.schedule && Array.isArray(event.schedule)) ? event.schedule : (scheduleTemplates[event.category] || []);
                 schedule.forEach(item => { scheduleTable.innerHTML += `<tr><td>${item.event}</td><td>${item.time}</td></tr>`; });
             };
             
@@ -1376,8 +1571,8 @@ updateChangeElement('weeklySpentChange', calculatePercentageChange(thisWeeksSpen
                     </div>
                     <h3 class="text-lg font-bold text-gray-800 mb-2">${requestData.eventName || 'Venue Request'}</h3>
                     <div class="event-meta text-sm mb-2">
-                        <span class="flex items-center"><i class="fas fa-map-marker-alt mr-2 text-red-500"></i>${requestData.venue || 'N/A'}</span>
-                        <span class="flex items-center"><i class="fas fa-calendar-day mr-2 text-red-500"></i>${new Date(requestData.eventDate).toLocaleDateString()}</span>
+                        <span class="flex items-center"><i class="fas fa-map-marker-alt mr-2 text-blue-500"></i>${requestData.venue || 'N/A'}</span>
+                        <span class="flex items-center"><i class="fas fa-calendar-day mr-2 text-blue-500"></i>${new Date(requestData.eventDate).toLocaleDateString()}</span>
                     </div>
                     <div class="event-meta text-sm mb-4"><span class="flex items-center text-gray-500"><i class="fas fa-tag mr-2"></i>${requestData.category || 'N/A'}</span></div>
                     <p class="text-gray-600 event-description">${requestData.description || 'No description provided.'}</p>
@@ -1390,13 +1585,17 @@ updateChangeElement('weeklySpentChange', calculatePercentageChange(thisWeeksSpen
                 const requestId = document.getElementById('requestPopup').dataset.requestId;
                 if (!requestId) return;
 
-                const requestRef = db.collection('requests').doc(requestId);
+                const requestRef = db.collection(rentalsCollection).doc(requestId);
                 try {
                     await requestRef.update({ status: newStatus });
                     
                     if (newStatus === 'accepted') {
                         const requestDoc = await requestRef.get();
                         const requestData = requestDoc.data();
+                        const requestSchoolId = requestData.schoolId || schoolId;
+                        if (!requestData.schoolId) {
+                            await requestRef.set({ schoolId: requestSchoolId }, { merge: true });
+                        }
                         
                         const newEvent = {
                             title: requestData.eventName,
@@ -1407,9 +1606,10 @@ updateChangeElement('weeklySpentChange', calculatePercentageChange(thisWeeksSpen
                             image: requestData.image || 'https://via.placeholder.com/400x200',
                             desc: requestData.description,
                             fromRequest: true,
+                            schoolId: requestSchoolId,
                             created: firebase.firestore.FieldValue.serverTimestamp()
                         };
-                        await db.collection('events').add(newEvent);
+                        await db.collection(eventsCollection).add(newEvent);
                     }
                     
                     closeRequestPopup();
@@ -1427,7 +1627,7 @@ updateChangeElement('weeklySpentChange', calculatePercentageChange(thisWeeksSpen
 
                 if(confirm("Are you sure you want to permanently delete this request?")) {
                     try {
-                        await db.collection('requests').doc(requestId).delete();
+                        await db.collection(rentalsCollection).doc(requestId).delete();
                         closeRequestPopup();
                         updateAdminDashboard();
                         showPopup('Success', 'Request deleted successfully.', true);
@@ -1445,8 +1645,8 @@ updateChangeElement('weeklySpentChange', calculatePercentageChange(thisWeeksSpen
             document.getElementById('requestClose').addEventListener('click', closeRequestPopup);
             document.getElementById('requestOverlay').addEventListener('click', closeRequestPopup);
 
-            try { var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d"); var gradient = ctx.createLinearGradient(0, 0, 0, 225); gradient.addColorStop(0, "rgba(215, 227, 244, 1)"); gradient.addColorStop(1, "rgba(215, 227, 244, 0)"); new Chart(ctx, { type: "line", data: { labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], datasets: [{ label: "Views", fill: true, backgroundColor: gradient, borderColor: '#f82249', data: [500, 350, 700, 1500, 1563, 1923, 2566, 2448, 2805, 2438, 2917, 3327] }] }, options: { maintainAspectRatio: false, legend: { display: false }, tooltips: { intersect: false }, hover: { intersect: true }, plugins: { filler: { propagate: false } }, scales: { xAxes: [{ reverse: true, gridLines: { color: "rgba(0,0,0,0.0)" } }], yAxes: [{ ticks: { stepSize: 1000 }, display: true, borderDash: [5, 5], gridLines: { color: "rgba(0,0,0,0.0)" } }] } } });
-                pieChart = new Chart(document.getElementById("chartjs-dashboard-pie"), { type: "doughnut", data: { labels: [], datasets: [{ data: [], backgroundColor: ['#f82249', '#ff6b6b', '#ff8787', '#ccc'], borderWidth: 5 }] }, options: { responsive: !window.MSInputMethodContext, maintainAspectRatio: false, legend: { display: false }, cutoutPercentage: 75 } });
+            try { var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d"); var gradient = ctx.createLinearGradient(0, 0, 0, 225); gradient.addColorStop(0, "rgba(215, 227, 244, 1)"); gradient.addColorStop(1, "rgba(215, 227, 244, 0)"); new Chart(ctx, { type: "line", data: { labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], datasets: [{ label: "Views", fill: true, backgroundColor: gradient, borderColor: '#1c3fa8', data: [500, 350, 700, 1500, 1563, 1923, 2566, 2448, 2805, 2438, 2917, 3327] }] }, options: { maintainAspectRatio: false, legend: { display: false }, tooltips: { intersect: false }, hover: { intersect: true }, plugins: { filler: { propagate: false } }, scales: { xAxes: [{ reverse: true, gridLines: { color: "rgba(0,0,0,0.0)" } }], yAxes: [{ ticks: { stepSize: 1000 }, display: true, borderDash: [5, 5], gridLines: { color: "rgba(0,0,0,0.0)" } }] } } });
+                pieChart = new Chart(document.getElementById("chartjs-dashboard-pie"), { type: "doughnut", data: { labels: [], datasets: [{ data: [], backgroundColor: ['#1c3fa8', '#26b2e4', '#8ec5ff', '#cbd9f5'], borderWidth: 5 }] }, options: { responsive: !window.MSInputMethodContext, maintainAspectRatio: false, legend: { display: false }, cutoutPercentage: 75 } });
                 flatpickrInstance = flatpickr(document.getElementById("datetimepicker-dashboard"), { inline: true, prevArrow: "<span title=\"Previous month\">«</span>", nextArrow: "<span title=\"Next month\">»</span>", defaultDate: "today" });
             } catch (error) { console.error("Error initializing charts or calendar:", error); }
             function updateEventTypes(events) { if (!pieChart || !events || events.length === 0) return; const categoryCount = events.reduce((acc, event) => { const category = event.category || 'Uncategorized'; acc[category] = (acc[category] || 0) + 1; return acc; }, {}); const totalEvents = events.length; const sortedCategories = Object.entries(categoryCount).sort((a, b) => b[1] - a[1]); pieChart.data.labels = sortedCategories.map(([category]) => category); pieChart.data.datasets[0].data = sortedCategories.map(([, count]) => count); pieChart.update(); const tableBody = document.getElementById('eventTypesTableBody'); tableBody.innerHTML = ''; sortedCategories.forEach(([category, count]) => { const percentage = ((count / totalEvents) * 100).toFixed(1); tableBody.innerHTML += `<tr><td>${category}</td><td class="text-end">${percentage}%</td></tr>`; }); }

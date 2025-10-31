@@ -10,24 +10,27 @@
   --nav-font: "Poppins", sans-serif;
 }
 
-/* Global Colors - Red Theme */
+/* Global Colors */
 :root { 
-  --background-color: #ffffff;
-  --default-color: #444444;
-  --heading-color: #0e1b4d; /* Dark navy for headings */
-  --accent-color: #f82249; /* Primary red color */
+  --background-color: #eef2ff;
+  --default-color: #1f2937;
+  --heading-color: #0b163a;
+  --accent-color: #2563eb;
+  --accent-color-rgb: 37, 99, 235;
+  --accent-contrast: #ffffff;
   --surface-color: #ffffff;
   --contrast-color: #ffffff;
 }
 
-/* Nav Menu Colors - Red Theme */
+/* Nav Menu Colors */
 :root {
-  --nav-color: #0e1b4d;        /* Dark navy for nav links */
-  --nav-hover-color: #f82249;  /* Red hover/active state */
+  --nav-color: #0b163a;
+  --nav-hover-color: var(--accent-color);
   --nav-mobile-background-color: #ffffff;
   --nav-dropdown-background-color: #ffffff;
   --nav-dropdown-color: #212529;
-  --nav-dropdown-hover-color: #f82249; /* Red dropdown hover */
+  --nav-dropdown-hover-color: var(--accent-color);
+  --nav-background: rgba(11, 22, 58, 0.92);
 }
 
 /* Color Presets */

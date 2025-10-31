@@ -49,7 +49,7 @@ p {
 .back-to-top {
   position: fixed;
   display: none;
-  background: #f82249;
+  background: var(--accent-color);
   color: #fff;
   width: 40px;
   height: 40px;
@@ -91,7 +91,7 @@ p {
   display: block;
   width: 60px;
   height: 5px;
-  background: #f82249;
+  background: var(--accent-color);
   bottom: 0;
   left: calc(50% - 25px);
 }
@@ -152,7 +152,7 @@ p {
 }
 
 #header #logo h1 span {
-  color: #f82249;
+  color: var(--accent-color);
 }
 
 #header #logo h1 a,
@@ -265,7 +265,7 @@ p {
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #f82249;
+  background-color: var(--accent-color);
   visibility: hidden;
   transition: all 0.3s ease-in-out 0s;
 }
@@ -279,10 +279,10 @@ p {
 
 .nav-menu li.buy-tickets a {
   color: #fff;
-  background: #f82249;
+  background: var(--accent-color);
   padding: 7px 22px;
   border-radius: 50px;
-  border: 2px solid #f82249;
+  border: 2px solid var(--accent-color);
   transition: all ease-in-out 0.3s;
   font-weight: 500;
   margin-left: 8px;
@@ -323,7 +323,7 @@ p {
 }
 
 .nav-menu ul li:hover > a {
-  background: #f82249;
+  background: var(--accent-color);
   color: #fff;
 }
 
@@ -390,7 +390,7 @@ p {
 }
 
 #mobile-nav ul li a:hover {
-  color: #f82249;
+  color: var(--accent-color);
 }
 
 #mobile-nav ul li li {
@@ -407,11 +407,11 @@ p {
 }
 
 #mobile-nav ul .menu-has-children i.fa-chevron-up {
-  color: #f82249;
+  color: var(--accent-color);
 }
 
 #mobile-nav ul .menu-item-active {
-  color: #f82249;
+  color: var(--accent-color);
 }
 
 #mobile-body-overly {
@@ -494,7 +494,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #intro h1 span {
-  color: #f82249;
+  color: var(--accent-color);
 }
 
 #intro p {
@@ -506,7 +506,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 #intro .play-btn {
   width: 94px;
   height: 94px;
-  background: radial-gradient(#f82249 50%, rgba(101, 111, 150, 0.15) 52%);
+  background: radial-gradient(var(--accent-color) 50%, rgba(101, 111, 150, 0.15) 52%);
   border-radius: 50%;
   display: block;
   position: relative;
@@ -553,7 +553,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #intro .play-btn:hover::after {
-  border-left: 15px solid #f82249;
+  border-left: 15px solid var(--accent-color);
   -webkit-transform: scale(20);
   transform: scale(20);
 }
@@ -591,11 +591,11 @@ body.mobile-nav-active #mobile-nav-toggle {
   color: #fff;
   -webkit-animation-delay: 0.8s;
   animation-delay: 0.8s;
-  border: 2px solid #f82249;
+  border: 2px solid var(--accent-color);
 }
 
 #intro .about-btn:hover {
-  background: #f82249;
+  background: var(--accent-color);
   color: #fff;
 }
 
@@ -687,7 +687,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #speakers .speaker .details a:hover {
-  color: #f82249;
+  color: var(--accent-color);
 }
 
 #speakers .speaker:hover .details {
@@ -722,7 +722,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #speakers-details .details .social a:hover {
-  background: #f82249;
+  background: var(--accent-color);
   color: #fff;
 }
 
@@ -762,13 +762,13 @@ body.mobile-nav-active #mobile-nav-toggle {
   border: none;
   border-radius: 50px;
   font-weight: 600;
-  background-color: #0e1b4d;
+  background-color: var(--heading-color);
   color: #fff;
   padding: 10px 100px;
 }
 
 #schedule .nav-tabs a.active {
-  background-color: #f82249;
+  background-color: var(--accent-color);
   color: #fff;
 }
 
@@ -940,7 +940,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #hotels a:hover {
-  color: #f82249;
+  color: var(--accent-color);
 }
 
 #hotels .stars {
@@ -987,7 +987,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #gallery .owl-dot.active {
-  background-color: #f82249;
+  background-color: var(--accent-color);
 }
 
 #gallery .gallery-carousel .owl-stage-outer {
@@ -995,7 +995,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #gallery .gallery-carousel .center {
-  border: 6px solid #f82249;
+  border: 6px solid var(--accent-color);
   margin: -10px;
   box-sizing: content-box;
   padding: 4px;
@@ -1105,7 +1105,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   border: 0;
   padding: 9px 25px;
   cursor: pointer;
-  background: #f82249;
+  background: var(--accent-color);
   color: #fff;
   transition: all 0.3s ease;
   outline: none;
@@ -1165,7 +1165,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   border-radius: 50px;
   padding: 10px 40px;
   transition: all 0.2s;
-  background-color: #f82249;
+  background-color: var(--accent-color);
   border: 0;
   color: #fff;
 }
@@ -1184,7 +1184,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   border-radius: 50px;
   padding: 10px 40px;
   transition: all 0.2s;
-  background-color: #f82249;
+  background-color: var(--accent-color);
   border: 0;
   color: #fff;
 }
@@ -1214,7 +1214,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   font-size: 48px;
   display: inline-block;
   margin-bottom: 10px;
-  color: #f82249; /* Red color for icons */
+  color: var(--accent-color); /* Red color for icons */
 }
 
 #contact .contact-info address,
@@ -1236,7 +1236,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #contact .contact-info a:hover {
-  color: #f82249; /* Red on hover */
+  color: var(--accent-color); /* Red on hover */
 }
 
 #contact .contact-info .contact-address,
@@ -1252,8 +1252,8 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #contact .form #sendmessage {
-  color: #f82249; /* Red for success message */
-  border: 1px solid #f82249;
+  color: var(--accent-color); /* Red for success message */
+  border: 1px solid var(--accent-color);
   display: none;
   text-align: center;
   padding: 15px;
@@ -1296,12 +1296,12 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 #contact .form input:focus,
 #contact .form textarea:focus {
-  border-color: #f82249; /* Red border on focus */
+  border-color: var(--accent-color); /* Red border on focus */
   outline: none; /* Remove default outline */
 }
 
 #contact .form button[type="submit"] {
-  background: #f82249; /* Red background for button */
+  background: var(--accent-color); /* Red background for button */
   border: 0;
   padding: 10px 40px;
   color: #fff; /* White text */
@@ -1317,7 +1317,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 /* Optional: Adjust iframe to ensure it fits well */
 #contact iframe {
   padding-left: 20px;
-  border: 3px solid #f82249; /* Add a border to the iframe */
+  border: 3px solid var(--accent-color); /* Add a border to the iframe */
   border-radius: 8px; /* Optional: Add rounded corners */
 }
 
@@ -1546,15 +1546,15 @@ footer .bottom-details .bottom_text {
 
 #details .nav-link {
   border: none;
-  color: #0e1b4d;
+  color: var(--heading-color);
   font-weight: 600;
   padding: 1rem 2rem;
   transition: all 0.3s ease;
 }
 
 #details .nav-link.active {
-  color: #f82249;
-  border-bottom: 3px solid #f82249;
+  color: var(--accent-color);
+  border-bottom: 3px solid var(--accent-color);
 }
 
 #details .tab-content {
@@ -1585,7 +1585,7 @@ footer .bottom-details .bottom_text {
 }
 
 .seat:hover {
-  background: #f82249;
+  background: var(--accent-color);
   transform: scale(1.1);
 }
 
@@ -1608,7 +1608,7 @@ footer .bottom-details .bottom_text {
 
 .amenity-card i {
   font-size: 2.5rem;
-  color: #f82249;
+  color: var(--accent-color);
   margin-bottom: 1rem;
 }
 
@@ -1638,26 +1638,38 @@ footer .bottom-details .bottom_text {
 --------------------------------------------------------------*/
 #newsletter {
   padding: 60px 0;
-  background: #f82249;
+  background: var(--accent-color);
   color: #fff;
+}
+
+.newsletter-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  max-width: 420px;
+  margin: 20px auto 0;
+  flex-wrap: wrap;
 }
 
 .newsletter-form input {
   border-radius: 50px;
   border: none;
-  padding: 15px 25px;
+  padding: 12px 18px;
+  flex: 1 1 240px;
+  max-width: 320px;
 }
 
 .newsletter-form button {
   background: #fff;
-  color: #f82249;
+  color: var(--accent-color);
   border-radius: 50px;
-  padding: 15px 30px;
+  padding: 12px 26px;
   transition: all 0.3s ease;
 }
 
 .newsletter-form button:hover {
-  background: #0e1b4d;
+  background: var(--heading-color);
   color: #fff;
 }
 
@@ -1670,18 +1682,22 @@ footer .bottom-details .bottom_text {
   --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --heading-font: "Nunito", sans-serif;
   --nav-font: "Poppins", sans-serif;
-  --background-color: #ffffff;
-  --default-color: #444444;
-  --heading-color: #0e1b4d; /* Dark navy for headings */
-  --accent-color: #f82249; /* Primary red color */
+  --background-color: #eef2ff;
+  --default-color: #1f2937;
+  --heading-color: #0b163a;
+  --accent-color: #2563eb;
+  --accent-color-rgb: 37, 99, 235;
+  --accent-contrast: #ffffff;
+  --accent-soft: rgba(37, 99, 235, 0.12);
   --surface-color: #ffffff;
   --contrast-color: #ffffff;
-  --nav-color: #0e1b4d;        /* Dark navy for nav links */
-  --nav-hover-color: #f82249;  /* Red hover/active state */
+  --nav-color: #0b163a;
+  --nav-hover-color: var(--accent-color);
   --nav-mobile-background-color: #ffffff;
   --nav-dropdown-background-color: #ffffff;
   --nav-dropdown-color: #212529;
-  --nav-dropdown-hover-color: #f82249; /* Red dropdown hover */
+  --nav-dropdown-hover-color: var(--accent-color);
+  --nav-background: rgba(11, 22, 58, 0.92);
   scroll-behavior: smooth;
 }
 
@@ -2852,7 +2868,7 @@ section,
 
 .team .team-member:hover {
   transform: scale(1.08);
-  box-shadow: 0px 0 30px rgba(248, 34, 73, 0.3); /* Red shadow on hover */
+  box-shadow: 0px 0 30px rgba(var(--accent-color-rgb, 37, 99, 235), 0.3); /* Red shadow on hover */
 }
 
 .team .team-member:hover .social {

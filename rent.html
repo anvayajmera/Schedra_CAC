@@ -12,10 +12,12 @@
   </script>
 
   <meta charset="utf-8">
-  <title>PantherVenue - Rent</title>
+  <title>Schedra - Rent</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="Rent our gymnasium for your events" name="keywords">
-  <meta content="Host sporting events, concerts, and more at PantherVenue" name="description">
+  <meta content="Host sporting events, concerts, and more at Schedra" name="description">
+  <script src="js/config.js"></script>
+  <script src="js/site-runtime.js"></script>
 
   <!-- Favicons -->
   <link href="https://cloud-eliqwphhl-hack-club-bot.vercel.app/0untitled_design__13_.png" rel="icon">
@@ -605,24 +607,18 @@
   </style>
 </head>
 
-<body class="index-page">
+<body class="index-page" data-page="rent">
 
   <!-- Header (FROM old code) -->
   <header id="header">
     <div class="container">
       <div id="logo" class="pull-left">
-        <a href="home.html" class="scrollto">
-          <img src="https://cloud-lrd7zzrnx-hack-club-bot.vercel.app/0untitled__2357_x_778_px___2_.png" alt="PantherVenue Logo" title="">
+        <a href="/home.html" class="scrollto">
+          <img src="navImage.png" alt="Schedra Logo" title="Schedra">
         </a>
       </div>
       <nav id="nav-menu-container">
-        <ul class="nav-menu">
-          <li><a href="/home.html">Home</a></li>
-          <li><a href="/home.html#about">About</a></li>
-          <li><a href="/event.html">Events</a></li>
-          <li class="menu-active"><a href="/rent.html">Rent Venue</a></li>
-          <li class="buy-tickets"><a href="/login.html" id="loginButton">Log In</a></li>
-        </ul>
+        <ul class="nav-menu"></ul>
       </nav>
     </div>
   </header>
@@ -635,8 +631,8 @@
         <div class="container">
           <div class="row align-items-center">
             <div class="col-lg-6 hero-content" data-aos="fade-right" data-aos-delay="100">
-              <h1>Host Your Next Event at PantherVenue</h1>
-              <p>From sporting events to trade shows, the PantherVenue facility has everything you need to host a successful event.</p>
+              <h1>Host Your Next Event at Schedra</h1>
+              <p>From sporting events to trade shows, the Schedra facility has everything you need to host a successful event.</p>
               <div class="stats-row">
                 <div class="stat-item">
                   <span class="stat-number">100K+</span>
@@ -657,7 +653,7 @@
               </div>
             </div>
             <div class="col-lg-6 hero-media" data-aos="zoom-in" data-aos-delay="200">
-              <img src="rentimg.jpeg" alt="PantherVenue Gymnasium" class="img-fluid main-image">
+              <img src="rentimg.jpeg" alt="Schedra Gymnasium" class="img-fluid main-image">
               <div class="image-overlay">
                 <div class="badge-accredited">
                   <i class="bi bi-patch-check-fill"></i>
@@ -720,7 +716,7 @@
             </div>
             <div class="event-info">
               <h3>Secure Your Date for an Unforgettable Event</h3>
-              <p>Our calendar fills up fast. Contact us today to start planning your event at PantherVenue.</p>
+              <p>Our calendar fills up fast. Contact us today to start planning your event at Schedra.</p>
             </div>
             <div class="event-action">
               <a href="#rental-form" class="btn-event">Start Rental Process</a>
@@ -817,7 +813,7 @@
 
     <div class="section-header">
       <h2>Rent Our Venue</h2>
-      <p>Fill out this form to request an event at PantherVenue.</p>
+      <p>Fill out this form to request an event at Schedra.</p>
     </div>
 
           <!-- Rental Process Steps -->
@@ -1033,9 +1029,10 @@
     })();
 
     /**
-     * PantherVenue Rental Form and Firebase Logic (FROM old code)
+     * Schedra Rental Form and Firebase Logic (FROM old code)
      */
-    const firebaseConfig = {
+    const runtime = window.SchedraSite || null;
+    const firebaseConfig = runtime && runtime.getFirebaseConfig ? runtime.getFirebaseConfig() : {
       apiKey: "AIzaSyC0BYFCxwgu3tHp_3oeLsxoMBpyDRnj8IA",
       authDomain: "panthervenue.firebaseapp.com",
       projectId: "panthervenue",
@@ -1043,41 +1040,108 @@
       messagingSenderId: "15387964560",
       appId: "1:15387964560:web:b9dbc68e3a97dd466b5415"
     };
-    firebase.initializeApp(firebaseConfig);
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
     const auth = firebase.auth();
     const db = firebase.firestore();
+    const collections = runtime && runtime.getCollections ? runtime.getCollections() : {};
+    const rentalsCollection = collections.rentals || 'rental_requests_bridgewater';
+    const usersCollection = collections.users || 'users_bridgewater';
+    const eventsCollection = collections.events || 'events_bridgewater';
+    const fallbackSchoolId = runtime && runtime.getConfig ? (runtime.getConfig().defaultSchoolId || 'bridgewater') : 'bridgewater';
+    const schoolId = runtime && runtime.getActiveSchoolId ? runtime.getActiveSchoolId() : fallbackSchoolId;
 
-  let currentStep = 1;
+let currentStep = 1;
 const totalSteps = 6;
 let eventImageData = '';
 let currentUser = null;
+const AUTH_STORAGE_KEY = 'schedra:authState';
+
+const readStoredAuth = () => {
+  try {
+    return JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY) || 'null');
+  } catch (err) {
+    return null;
+  }
+};
+
+const persistStoredAuth = (payload) => {
+  try {
+    if (payload) {
+      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(payload));
+    } else {
+      localStorage.removeItem(AUTH_STORAGE_KEY);
+    }
+  } catch (err) {
+    /* localStorage may be unavailable */
+  }
+};
 
 document.addEventListener('DOMContentLoaded', function() {
   AOS.init({
     once: true,
     duration: 1000
   });
+  const loginButton = document.getElementById('loginButton');
+  if (loginButton) {
+    const storedAuth = readStoredAuth();
+    if (storedAuth) {
+      loginButton.textContent = 'Dashboard';
+      loginButton.href = '/login.html';
+    }
+  }
   auth.onAuthStateChanged(async (user) => {
-    const loginButton = document.getElementById('loginButton');
     if (user) {
-      const userDoc = await db.collection('users').doc(user.uid).get();
-      if (userDoc.exists) {
-        currentUser = { uid: user.uid, ...userDoc.data() };
-        document.getElementById('first-name').value = currentUser.firstName || '';
-        document.getElementById('last-name').value = currentUser.lastName || '';
-        document.getElementById('email').value = currentUser.email || '';
-        if (loginButton) {
-          loginButton.textContent = 'Dashboard';
-          loginButton.href = '/login.html';
-        }
-      } else {
-        console.error("User exists in Auth, but not in Firestore.");
-        currentUser = null;
-        if (loginButton) {
-          loginButton.textContent = 'Log In';
-          loginButton.href = '/login.html';
-        }
+      let userDoc = await db.collection(usersCollection).doc(user.uid).get();
+      if (!userDoc.exists) {
+        await db.collection(usersCollection).doc(user.uid).set({
+          email: user.email || '',
+          username: (user.email || '').split('@')[0] || 'User',
+          firstName: '',
+          lastName: '',
+          isAdmin: false,
+          schoolId: schoolId,
+          created: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+        userDoc = await db.collection(usersCollection).doc(user.uid).get();
       }
+      let userData = userDoc.data() || {};
+      const updates = {};
+      if (!userData.firstName) updates.firstName = userData.firstName || '';
+      if (!userData.lastName) updates.lastName = userData.lastName || '';
+      if (!userData.email) updates.email = user.email || '';
+      if (typeof userData.isAdmin !== 'boolean') updates.isAdmin = false;
+      if (!userData.schoolId || userData.schoolId !== schoolId) updates.schoolId = schoolId;
+      if (!userData.username) updates.username = (user.email || '').split('@')[0] || 'User';
+      if (Object.keys(updates).length) {
+        if (!userDoc.exists) updates.created = firebase.firestore.FieldValue.serverTimestamp();
+        await db.collection(usersCollection).doc(user.uid).set(updates, { merge: true });
+        userDoc = await db.collection(usersCollection).doc(user.uid).get();
+        userData = userDoc.exists ? (userDoc.data() || {}) : { ...userData, ...updates };
+      }
+      currentUser = {
+        uid: user.uid,
+        email: user.email || userData.email || '',
+        username: userData.username || (user.email || '').split('@')[0] || 'User',
+        firstName: userData.firstName || '',
+        lastName: userData.lastName || '',
+        isAdmin: !!userData.isAdmin,
+        schoolId: userData.schoolId || schoolId
+      };
+      document.getElementById('first-name').value = currentUser.firstName;
+      document.getElementById('last-name').value = currentUser.lastName;
+      document.getElementById('email').value = currentUser.email;
+      if (loginButton) {
+        loginButton.textContent = 'Dashboard';
+        loginButton.href = '/login.html';
+      }
+      persistStoredAuth({
+        uid: user.uid,
+        email: currentUser.email || '',
+        username: currentUser.username || '',
+        isAdmin: currentUser.isAdmin
+      });
     } else {
       currentUser = null;
       console.log("No user is logged in.");
@@ -1085,6 +1149,7 @@ document.addEventListener('DOMContentLoaded', function() {
         loginButton.textContent = 'Log In';
         loginButton.href = '/login.html';
       }
+      persistStoredAuth(null);
     }
     document.querySelectorAll('input[name="venue"]').forEach(radio => {
   radio.checked = false; // Corrected from 'input.checked' to 'radio.checked'
@@ -1270,8 +1335,9 @@ async function submitForm() {
   const imageData = eventImageData || '';
 
   const newRequest = {
-    userId: currentUser.uid,
-    username: currentUser.username,
+    schoolId,
+    userId: currentUser ? currentUser.uid : null,
+    username: currentUser?.username || firstName,
     firstName,
     lastName,
     email,
@@ -1287,7 +1353,17 @@ async function submitForm() {
   };
 
   try {
-    await db.collection('requests').add(newRequest);
+   await db.collection(rentalsCollection).add(newRequest);
+    if (currentUser && (firstName || lastName || email)) {
+      await db.collection(usersCollection).doc(currentUser.uid).set({
+        firstName,
+        lastName,
+        email
+      }, { merge: true });
+      currentUser.firstName = firstName;
+      currentUser.lastName = lastName;
+      currentUser.email = email;
+    }
     
     confetti({
       particleCount: 100,
@@ -1321,7 +1397,7 @@ async function submitForm() {
   <div class="chat-header">
     <div class="header-info">
       <img src="aiprofile.png" alt="AI Profile Logo" class="chatbot-logo" />
-      <h2 class="logo-text">PantherBot</h2>
+      <h2 class="logo-text">SchedraBot</h2>
     </div>
     <button id="close-chatbot" class="material-symbols-rounded">keyboard_arrow_down</button>
   </div>
@@ -1329,7 +1405,7 @@ async function submitForm() {
   <div class="chat-body">
     <div class="message bot-message">
       <img src="aiprofile.png" alt="AI Profile Logo" class="bot-avatar" />
-      <div class="message-text">Nice to meet you! I'm PantherBot, your AI chatbot for PantherVenue. How can I help you today?</div>
+      <div class="message-text">Nice to meet you! I'm SchedraBot, your AI chatbot for Schedra. How can I help you today?</div>
     </div>
   </div>
   <!-- Chatbot Footer -->
@@ -1514,11 +1590,11 @@ document.addEventListener('DOMContentLoaded', () => {
         chatHistory = [
             {
                 role: "system",
-                content: `You are PantherBot, an extreme expert AI assistant for PantherVenue. Your goal is to answer user questions accurately and helpfully based on the following information about the venue, its policies, and its website. Use Markdown for clear formatting.
+                content: `You are SchedraBot, an extreme expert AI assistant for Schedra. Your goal is to answer user questions accurately and helpfully based on the following information about the venue, its policies, and its website. Use Markdown for clear formatting.
 
 ---
 ### General Venue Information
-- **Name:** PantherVenue
+- **Name:** Schedra
 - **Location:** Inside Bridgewater-Raritan High School, 600 Garretson Road, Bridgewater, New Jersey.
 - **Capacity:** Seats up to 3,500 people.
 - **Features:** A premier gymnasium renovated in 2024 with a high-quality sound system, adjustable lighting, a large video screen, new bleachers, and a resurfaced floor.
@@ -1559,12 +1635,12 @@ document.addEventListener('DOMContentLoaded', () => {
 ---
 ### Your Persona & Instructions
 - Be friendly, professional, and enthusiastic.
-- Your name is PantherBot.
+- Your name is SchedraBot.
 - Refer to the information above to answer questions. If you don't know the answer, politely state that you don't have that information and suggest contacting the venue directly via phone or email.`
             },
             {
                 role: "assistant",
-                content: "Nice to meet you! I'm PantherBot, your AI chatbot for PantherVenue. How can I help you today?"
+                content: "Nice to meet you! I'm SchedraBot, your AI chatbot for Schedra. How can I help you today?"
             }
         ];
     }
