@@ -45,7 +45,7 @@ document.onkeydown = function(e) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>360 Viewer</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/105/three.min.js"></script>
-    <script src="js/panolens.min.js"></script>
+    <script src="assets/js/panolens.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -62,7 +62,7 @@ document.onkeydown = function(e) {
     <script>
         // Initialize Panolens viewer
         const panoramaContainer = document.querySelector('.panorama-container');
-        const panoramaImage = new PANOLENS.ImagePanorama('images/image1.jpeg'); // Update with your 360 image path
+        const panoramaImage = new PANOLENS.ImagePanorama('assets/img/panoramas/image1.jpeg'); // Update with your 360 image path
         const viewer = new PANOLENS.Viewer({
             container: panoramaContainer,
             autoRotate: true,

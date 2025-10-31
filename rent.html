@@ -16,12 +16,12 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="Rent our gymnasium for your events" name="keywords">
   <meta content="Host sporting events, concerts, and more at Schedra" name="description">
-  <script src="js/config.js"></script>
-  <script src="js/site-runtime.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/site-runtime.js"></script>
 
   <!-- Favicons -->
   <link href="https://cloud-eliqwphhl-hack-club-bot.vercel.app/0untitled_design__13_.png" rel="icon">
-  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="assets/img/icons/icon-48x48.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -39,7 +39,7 @@
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="assets/vendor-legacy/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
   <!-- TailwindCSS is the goat here-->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -614,7 +614,7 @@
     <div class="container">
       <div id="logo" class="pull-left">
         <a href="/home.html" class="scrollto">
-          <img src="navImage.png" alt="Schedra Logo" title="Schedra">
+          <img src="assets/img/branding/navImage.png" alt="Schedra Logo" title="Schedra">
         </a>
       </div>
       <nav id="nav-menu-container">
@@ -653,7 +653,7 @@
               </div>
             </div>
             <div class="col-lg-6 hero-media" data-aos="zoom-in" data-aos-delay="200">
-              <img src="rentimg.jpeg" alt="Schedra Gymnasium" class="img-fluid main-image">
+              <img src="assets/img/rent/rentimg.jpeg" alt="Schedra Gymnasium" class="img-fluid main-image">
               <div class="image-overlay">
                 <div class="badge-accredited">
                   <i class="bi bi-patch-check-fill"></i>
@@ -802,7 +802,7 @@
                 </div>
               </div>
             </div>
-            <img src="assets/img/alt-features.png" class="img-fluid d-lg-none" alt="" style="max-width: 250px; margin-bottom: 2rem;">
+            <img src="assets/img/rent/alt-features.png" class="img-fluid d-lg-none" alt="" style="max-width: 250px; margin-bottom: 2rem;">
           </div>
         </div>
       </div>
@@ -1396,7 +1396,7 @@ async function submitForm() {
   <!-- Chatbot Header -->
   <div class="chat-header">
     <div class="header-info">
-      <img src="aiprofile.png" alt="AI Profile Logo" class="chatbot-logo" />
+      <img src="assets/img/branding/aiprofile.png" alt="AI Profile Logo" class="chatbot-logo" />
       <h2 class="logo-text">SchedraBot</h2>
     </div>
     <button id="close-chatbot" class="material-symbols-rounded">keyboard_arrow_down</button>
@@ -1404,7 +1404,7 @@ async function submitForm() {
   <!-- Chatbot Body -->
   <div class="chat-body">
     <div class="message bot-message">
-      <img src="aiprofile.png" alt="AI Profile Logo" class="bot-avatar" />
+      <img src="assets/img/branding/aiprofile.png" alt="AI Profile Logo" class="bot-avatar" />
       <div class="message-text">Nice to meet you! I'm SchedraBot, your AI chatbot for Schedra. How can I help you today?</div>
     </div>
   </div>
@@ -1452,7 +1452,7 @@ const displayChatHistory = () => {
             const outgoingMessageDiv = createMessageElement(userMessageContent, "user-message");
             chatBody.appendChild(outgoingMessageDiv);
         } else if (msg.role === "assistant") {
-            const botMessageContent = `<img src="aiprofile.png" alt="AI Profile Logo" class="bot-avatar" />
+            const botMessageContent = `<img src="assets/img/branding/aiprofile.png" alt="AI Profile Logo" class="bot-avatar" />
             <div class="message-text">${marked.parse(msg.content)}</div>`;
             const incomingMessageDiv = createMessageElement(botMessageContent, "bot-message");
             chatBody.appendChild(incomingMessageDiv);
@@ -1510,7 +1510,7 @@ const handleOutgoingMessage = (e) => {
     chatBody.appendChild(outgoingMessageDiv);
     chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
     setTimeout(() => {
-        const botMessageContent = `<img src="aiprofile.png" alt="AI Profile Logo" class="bot-avatar" />
+        const botMessageContent = `<img src="assets/img/branding/aiprofile.png" alt="AI Profile Logo" class="bot-avatar" />
         <div class="message-text">
           <div class="thinking-indicator">
             <div class="dot"></div>

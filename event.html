@@ -16,13 +16,13 @@
     <meta name="description" content="Explore Williamstown High School athletics, arts, and academic events in one campus calendar.">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link href="https://cloud-eliqwphhl-hack-club-bot.vercel.app/0untitled_design__13_.png" rel="icon" type="image/png">
-    <script src="js/config.js"></script>
-    <script src="js/site-runtime.js"></script>
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/site-runtime.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800" rel="stylesheet">
-    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor-legacy/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- poppins font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/vendor-legacy/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- jQuery + UI from cdn -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
@@ -227,7 +227,7 @@
     <header id="header">
         <div class="container">
             <div id="logo" class="pull-left">
-                <a href="/home.html" class="scrollto"><img src="navImage.png" alt="Williamstown High School Crest"></a>
+                <a href="/home.html" class="scrollto"><img src="assets/img/branding/navImage.png" alt="Williamstown High School Crest"></a>
             </div>
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
@@ -901,8 +901,8 @@
         });
     </script>
     
-    <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="assets/vendor-legacy/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
 
 
 
@@ -916,7 +916,7 @@
   <!-- Chatbot Header -->
   <div class="chat-header">
     <div class="header-info">
-      <img src="aiprofile.png" alt="AI Profile Logo" class="chatbot-logo" />
+      <img src="assets/img/branding/aiprofile.png" alt="AI Profile Logo" class="chatbot-logo" />
       <h2 class="logo-text">WilliamstownBot</h2>
     </div>
     <button id="close-chatbot" class="material-symbols-rounded">keyboard_arrow_down</button>
@@ -924,7 +924,7 @@
   <!-- Chatbot Body -->
   <div class="chat-body">
     <div class="message bot-message">
-      <img src="aiprofile.png" alt="AI Profile Logo" class="bot-avatar" />
+      <img src="assets/img/branding/aiprofile.png" alt="AI Profile Logo" class="bot-avatar" />
       <div class="message-text">Nice to meet you! I'm WilliamstownBot, your AI guide for Williamstown High School. How can I help today?</div>
     </div>
   </div>
@@ -973,7 +973,7 @@ const displayChatHistory = () => {
             const outgoingMessageDiv = createMessageElement(userMessageContent, "user-message");
             chatBody.appendChild(outgoingMessageDiv);
         } else if (msg.role === "assistant") {
-            const botMessageContent = `<img src="aiprofile.png" alt="AI Profile Logo" class="bot-avatar" />
+            const botMessageContent = `<img src="assets/img/branding/aiprofile.png" alt="AI Profile Logo" class="bot-avatar" />
             <div class="message-text">${marked.parse(msg.content)}</div>`;
             const incomingMessageDiv = createMessageElement(botMessageContent, "bot-message");
             chatBody.appendChild(incomingMessageDiv);
@@ -1031,7 +1031,7 @@ const handleOutgoingMessage = (e) => {
     chatBody.appendChild(outgoingMessageDiv);
     chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
     setTimeout(() => {
-        const botMessageContent = `<img src="aiprofile.png" alt="AI Profile Logo" class="bot-avatar" />
+        const botMessageContent = `<img src="assets/img/branding/aiprofile.png" alt="AI Profile Logo" class="bot-avatar" />
         <div class="message-text">
           <div class="thinking-indicator">
             <div class="dot"></div>

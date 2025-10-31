@@ -13,14 +13,14 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800" rel="stylesheet">
 
   <!-- Libraries CSS Files (for Navbar) -->
-  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <link href="lib/animate/animate.min.css" rel="stylesheet">
-  <link href="lib/venobox/venobox.css" rel="stylesheet">
-  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor-legacy/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor-legacy/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="assets/vendor-legacy/animate/animate.min.css" rel="stylesheet">
+  <link href="assets/vendor-legacy/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor-legacy/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
   <!-- Main Stylesheet File (for Navbar) -->
-  <link href="css/style.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
 <script>
 document.addEventListener('contextmenu', event => event.preventDefault());
 
@@ -168,18 +168,18 @@ document.onkeydown = function(e) {
   </main>
 
   <!-- JavaScript Libraries (for Navbar functionality) -->
-  <script src="lib/jquery/jquery.min.js"></script>
-  <script src="lib/jquery/jquery-migrate.min.js"></script>
-  <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="lib/easing/easing.min.js"></script>
-  <script src="lib/superfish/hoverIntent.js"></script>
-  <script src="lib/superfish/superfish.min.js"></script>
-  <script src="lib/wow/wow.min.js"></script>
-  <script src="lib/venobox/venobox.min.js"></script>
-  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+  <script src="assets/vendor-legacy/jquery/jquery.min.js"></script>
+  <script src="assets/vendor-legacy/jquery/jquery-migrate.min.js"></script>
+  <script src="assets/vendor-legacy/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor-legacy/easing/easing.min.js"></script>
+  <script src="assets/vendor-legacy/superfish/hoverIntent.js"></script>
+  <script src="assets/vendor-legacy/superfish/superfish.min.js"></script>
+  <script src="assets/vendor-legacy/wow/wow.min.js"></script>
+  <script src="assets/vendor-legacy/venobox/venobox.min.js"></script>
+  <script src="assets/vendor-legacy/owlcarousel/owl.carousel.min.js"></script>
 
   <!-- Template Main Javascript File -->
-  <script src="js/main.js"></script>
+  <script src="assets/js/main.js"></script>
 
 
 
@@ -194,7 +194,7 @@ document.onkeydown = function(e) {
   <!-- Chatbot Header -->
   <div class="chat-header">
     <div class="header-info">
-      <img src="aiprofile.png" alt="AI Profile Logo" class="chatbot-logo" />
+      <img src="assets/img/branding/aiprofile.png" alt="AI Profile Logo" class="chatbot-logo" />
       <h2 class="logo-text">SchedraBot</h2>
     </div>
     <button id="close-chatbot" class="material-symbols-rounded">keyboard_arrow_down</button>
@@ -202,7 +202,7 @@ document.onkeydown = function(e) {
   <!-- Chatbot Body -->
   <div class="chat-body">
     <div class="message bot-message">
-      <img src="aiprofile.png" alt="AI Profile Logo" class="bot-avatar" />
+      <img src="assets/img/branding/aiprofile.png" alt="AI Profile Logo" class="bot-avatar" />
       <div class="message-text">Nice to meet you! I'm SchedraBot, your AI chatbot for Schedra. How can I help you today?</div>
     </div>
   </div>
@@ -251,7 +251,7 @@ const displayChatHistory = () => {
             const outgoingMessageDiv = createMessageElement(userMessageContent, "user-message");
             chatBody.appendChild(outgoingMessageDiv);
         } else if (msg.role === "assistant") {
-            const botMessageContent = `<img src="aiprofile.png" alt="AI Profile Logo" class="bot-avatar" />
+            const botMessageContent = `<img src="assets/img/branding/aiprofile.png" alt="AI Profile Logo" class="bot-avatar" />
             <div class="message-text">${marked.parse(msg.content)}</div>`;
             const incomingMessageDiv = createMessageElement(botMessageContent, "bot-message");
             chatBody.appendChild(incomingMessageDiv);
@@ -309,7 +309,7 @@ const handleOutgoingMessage = (e) => {
     chatBody.appendChild(outgoingMessageDiv);
     chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
     setTimeout(() => {
-        const botMessageContent = `<img src="aiprofile.png" alt="AI Profile Logo" class="bot-avatar" />
+        const botMessageContent = `<img src="assets/img/branding/aiprofile.png" alt="AI Profile Logo" class="bot-avatar" />
         <div class="message-text">
           <div class="thinking-indicator">
             <div class="dot"></div>
